@@ -65,13 +65,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\TDMath.h" />
+    <ClInclude Include="GameProcedure.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameProcedure.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="XMClient.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="XMClient.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Game.ico" />
+    <None Include="Res\small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
