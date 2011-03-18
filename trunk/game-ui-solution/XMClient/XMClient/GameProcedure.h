@@ -25,7 +25,30 @@ protected:
 	virtual VOID	Release(VOID) = 0;
 	virtual VOID	ProcessInput(VOID);
 	virtual VOID	CloseRequest(VOID);
-	virtual LRESULT	MainWndProc(HWND, UINT, WPARAM, LPARAM);
+	virtual LRESULT	MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+private:
+	///创建主窗口
+	static VOID		CreateMainWnd(VOID);
+	///释放主窗口
+	static VOID		DestroyMainWnd(VOID);
+	///主窗口消息处理函数
+	static LRESULT CALLBACK	_MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	///处理窗口比例发生改变时
+	/* dwChanging-
+	|		WMSZ_LEFT/WMSZ_RIGHT
+	|		WMSZ_TOP/WMSZ_BOTTOM
+	| dwAnchor-
+	|		WMSZ_TOPLEFT    
+	|		WMSZ_TOPRIGHT   
+	|		WMSZ_BOTTOM     
+	|		WMSZ_BOTTOMLEFT 
+	|		WMSZ_BOTTOMRIGHT
+	*/
+	static VOID		KeepWindowFOV(RECT* pRect, UINT dwChanging, UINT dwAnchor);
+
+
+
 
 protected:
 	//-------------------------------------------
@@ -53,23 +76,5 @@ protected:
 	//桢速控制
 	static FLOAT		m_fFPS;
 
-private:
-	///创建主窗口
-	static VOID		CreateMainWnd(VOID);
-	///释放主窗口
-	static VOID		DestroyMainWnd(VOID);
-	///主窗口消息处理函数
-	static LRESULT CALLBACK	_MainWndProc(HWND, UINT, WPARAM, LPARAM);
-	///处理窗口比例发生改变时
-	/* dwChanging-
-	|		WMSZ_LEFT/WMSZ_RIGHT
-	|		WMSZ_TOP/WMSZ_BOTTOM
-	| dwAnchor-
-	|		WMSZ_TOPLEFT    
-	|		WMSZ_TOPRIGHT   
-	|		WMSZ_BOTTOM     
-	|		WMSZ_BOTTOMLEFT 
-	|		WMSZ_BOTTOMRIGHT
-	*/
-	static VOID		KeepWindowFOV(RECT* pRect, UINT dwChanging, UINT dwAnchor);
+
 };

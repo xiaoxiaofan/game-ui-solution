@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\common\TDMath.h"
 #include "resource.h"
+#include "GameProcedure.h"
 
 
 const CHAR MAINWINDOW_CLASS[]	= "XianMu WndClass";
@@ -11,15 +12,17 @@ const INT DEFWINDOW_HEIGHT		= 600;
 const UINT DEFWINDOW_STYLE		= WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX ; 
 
 
+BOOL					CGameProcedure::m_bMinimized		= FALSE;
+BOOL					CGameProcedure::m_bMaximized		= FALSE;
+BOOL					CGameProcedure::m_bFullScreen		= FALSE;
+RECT					CGameProcedure::m_rectWindow;
+
+
+
 
 VOID CGameProcedure::InitStaticMemeber(VOID)
 {
-
-}
-
-VOID CGameProcedure::Init()
-{
-
+	CreateMainWnd();
 }
 
 VOID CGameProcedure::CreateMainWnd()
@@ -31,7 +34,7 @@ VOID CGameProcedure::CreateMainWnd()
 
 
 
-	SetRect(m_rectWindow,200,100,DEFWINDOW_WIDTH,DEFWINDOW_HEIGHT);
+	SetRect(&m_rectWindow,200,100,DEFWINDOW_WIDTH,DEFWINDOW_HEIGHT);
 	//------------------------------------------------------
 	//×¢²á´°¿ÚÀà
 	WNDCLASSEX wcex;
@@ -92,10 +95,34 @@ VOID CGameProcedure::KeepWindowFOV(RECT* pRect, UINT dwChanging, UINT dwAnchor)
 
 }
 
-VOID CGameProcedure::Tick()
+VOID CGameProcedure::SetActiveProc( CGameProcedure* pToActive )
+{
+
+}
+
+VOID CGameProcedure::Tick( VOID )
 {
 	
 }
+
+VOID CGameProcedure::ProcessInput( VOID )
+{
+
+}
+
+LRESULT CGameProcedure::MainWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+{
+	return 1;
+}
+
+LRESULT CALLBACK CGameProcedure::_MainWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
+{
+
+	
+	return DefWindowPro
+}
+
+
 
 
 
