@@ -10,5 +10,7 @@ INT APIENTRY _tWinMain(HINSTANCE hInstance,
 	//±£´æÈ«¾Ö¾ä±ú
 	g_hInstance = hInstance;
 	CGameProcedure::InitStaticMemeber();
+	CGameProcedure::MainLoop();
+	CGameProcedure::ReleaseStaticMember();
 	return 0;
 }
