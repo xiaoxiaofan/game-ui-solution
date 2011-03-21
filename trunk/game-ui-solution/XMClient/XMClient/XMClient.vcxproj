@@ -81,6 +81,7 @@
     <ResourceCompile Include="XMClient.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Res\Attack.cur" />
     <None Include="Res\Game.ico" />
     <None Include="Res\small.ico" />
   </ItemGroup>
