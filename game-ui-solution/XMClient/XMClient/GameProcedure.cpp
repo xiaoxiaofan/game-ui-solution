@@ -18,6 +18,7 @@ VOID CGameProcedure::InitStaticMemeber(VOID)
 	m_rectWindow.right = 1000;
 	m_rectWindow.bottom = 700;
 	CreateMainWnd();
+	s_pUISystem = new CUISystem();
 }
 
 VOID CGameProcedure::CreateMainWnd()

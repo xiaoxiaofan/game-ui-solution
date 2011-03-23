@@ -1,0 +1,8 @@
+﻿  XMClient.cpp
+  stdafx.cpp
+  Global.cpp
+  GameProcedure.cpp
+f:\每天工作\game-ui-solution\xmclient\xmclient\gameprocedure.cpp(43): warning C4996: '_snprintf': This function or variable may be unsafe. Consider using _snprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          f:\program files\microsoft visual studio 10.0\vc\include\stdio.h(363) : see declaration of '_snprintf'
+  Generating Code...
+  XMClient.vcxproj -> F:\每天工作\game-ui-solution\XMClient\XMClient\..\..\bin\Debug\XMClient.exe

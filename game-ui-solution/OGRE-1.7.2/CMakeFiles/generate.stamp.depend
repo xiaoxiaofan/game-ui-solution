@@ -1,0 +1,117 @@
+# CMake generation dependency list for this directory.
+F:/ogre_src_v1-7-2/CMakeLists.txt
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeSystem.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCCompiler.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCXXCompiler.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/Windows.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/WindowsPaths.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/Windows-cl.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCPlatform.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCXXPlatform.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/cl.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeRCCompiler.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/Windows-cl.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCPlatform.cmake
+F:/ogre_src_v1-7-2/CMakeFiles/CMakeCXXPlatform.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/Platform/cl.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CheckCXXSourceCompiles.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/MacroLogFeature.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/OgreConfigTargets.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/PreprocessorUtils.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/OgreGetVersion.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/PreprocessorUtils.cmake
+F:/ogre_src_v1-7-2/CMake/Templates/version.txt.in
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CheckIncludeFile.cmake
+F:/ogre_src_v1-7-2/CMake/Dependencies.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindZLIB.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindZZip.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindFreeImage.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindFreetype.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindOpenGL.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeParseArguments.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindOpenGLES.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindDirectX.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindCg.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindBoost.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindBoost.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindPOCO.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindTBB.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindOIS.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindDoxygen.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CMakeParseArguments.cmake
+F:/ogre_src_v1-7-2/CMake/Packages/FindCppUnit.cmake
+F:/ogre_src_v1-7-2/CMake/Utils/FindPkgMacros.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/FindPkgConfig.cmake
+F:/ogre_src_v1-7-2/CMake/InstallDependencies.cmake
+F:/ogre_src_v1-7-2/Dependencies/bin/debug/OIS_d.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/OIS.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/OIS.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/OIS.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/debug/cg.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/cg.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/cg.dll
+F:/ogre_src_v1-7-2/Dependencies/bin/release/cg.dll
+F:/ogre_src_v1-7-2/CMake/PrepareThreadingOptions.cmake
+F:/ogre_src_v1-7-2/CMake/ConfigureBuild.cmake
+F:/ogre_src_v1-7-2/CMake/Templates/OgreBuildSettings.h.in
+F:/ogre_src_v1-7-2/CMake/InstallResources.cmake
+F:/ogre_src_v1-7-2/CMake/Templates/resources_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/resources.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/resources_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/resources.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/resources.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/resources.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/plugins.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/quakemap.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples_d.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples.cfg.in
+F:/ogre_src_v1-7-2/CMake/Templates/samples.cfg.in
+F:/ogre_src_v1-7-2/CMake/Packaging.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Modules/CPack.cmake
+C:/Program Files/CMake 2.8/share/cmake-2.8/Templates/CPackConfig.cmake.in
+C:/Program Files/CMake 2.8/share/cmake-2.8/Templates/CPackConfig.cmake.in
+F:/ogre_src_v1-7-2/CMake/FeatureSummary.cmake

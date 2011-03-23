@@ -29,6 +29,9 @@ private:
 	///主窗口消息处理函数
 	static LRESULT CALLBACK	_MainWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	
+public:
+	static tUISystem*      s_pUISystem;
+
 
 protected:
 
