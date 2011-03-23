@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+F:/ogre_src_v1-7-2/OgreMain/CMakeLists.txt
+F:/ogre_src_v1-7-2/CMake/Utils/PrecompiledHeader.cmake
+F:/ogre_src_v1-7-2/CMake/Templates/VisualStudioUserFile.vcproj.user.in
+F:/ogre_src_v1-7-2/CMake/Templates/VisualStudioUserFile.vcxproj.user.in
