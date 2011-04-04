@@ -102,7 +102,12 @@
   <ItemGroup>
     <ClCompile Include="DESBaseInterface.cpp" />
     <ClCompile Include="DESBaseObject.cpp" />
+    <ClCompile Include="DESIAMTimelineEffectable.cpp" />
+    <ClCompile Include="DESIAMTimelineSplittable.cpp" />
+    <ClCompile Include="DESIAMTimelineTransable.cpp" />
+    <ClCompile Include="DESIAMTimelineVirtualTrack.cpp" />
     <ClCompile Include="DESPropertySetter.cpp" />
+    <ClCompile Include="DESSource.cpp" />
     <ClCompile Include="DESTimeLine.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -113,7 +118,12 @@
   <ItemGroup>
     <ClInclude Include="DESBaseInterface.h" />
     <ClInclude Include="DESBaseObject.h" />
+    <ClInclude Include="DESIAMTimelineEffectable.h" />
+    <ClInclude Include="DESIAMTimelineSplittable.h" />
+    <ClInclude Include="DESIAMTimelineTransable.h" />
+    <ClInclude Include="DESIAMTimelineVirtualTrack.h" />
     <ClInclude Include="DESPropertySetter.h" />
+    <ClInclude Include="DESSource.h" />
     <ClInclude Include="DESTimeLine.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />

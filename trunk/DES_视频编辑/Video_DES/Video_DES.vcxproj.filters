@@ -28,6 +28,9 @@
     <Filter Include="DES Wrapper\DES Basic">
       <UniqueIdentifier>{8d645ccc-cc2b-43e0-bc13-725d4ee79dcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DES Wrapper\Components">
+      <UniqueIdentifier>{f0be7711-bf44-4869-ba7c-3e408c5ae16f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -57,6 +60,21 @@
     <ClCompile Include="DESPropertySetter.cpp">
       <Filter>DES Wrapper\DES Basic</Filter>
     </ClCompile>
+    <ClCompile Include="DESSource.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DESIAMTimelineEffectable.cpp">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="DESIAMTimelineSplittable.cpp">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="DESIAMTimelineTransable.cpp">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="DESIAMTimelineVirtualTrack.cpp">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Video_DES.h">
@@ -66,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DESBaseInterface.h">
@@ -82,6 +97,24 @@
     </ClInclude>
     <ClInclude Include="DESPropertySetter.h">
       <Filter>DES Wrapper\DES Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="DESSource.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESIAMTimelineEffectable.h">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DESIAMTimelineSplittable.h">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DESIAMTimelineTransable.h">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DESIAMTimelineVirtualTrack.h">
+      <Filter>DES Wrapper\Common Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
