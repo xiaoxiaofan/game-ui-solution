@@ -75,6 +75,21 @@
     <ClCompile Include="DESIAMTimelineVirtualTrack.cpp">
       <Filter>DES Wrapper\Common Interface</Filter>
     </ClCompile>
+    <ClCompile Include="DESTrack.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DESEffect.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DESTransition.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DESComposition.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DESGroup.cpp">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Video_DES.h">
@@ -114,6 +129,24 @@
       <Filter>DES Wrapper\Common Interface</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DESTrack.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESEffect.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESTransition.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESGroup.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESComposition.h">
+      <Filter>DES Wrapper\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DESInterfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

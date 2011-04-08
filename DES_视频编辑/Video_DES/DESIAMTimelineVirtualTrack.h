@@ -1,8 +1,9 @@
-#pragma once
+#ifndef DESIAMTimelineVirtualTrack_h__
+#define DESIAMTimelineVirtualTrack_h__
 
-#include "CDESBaseInterface.h"
+#include "DESBaseInterface.h"
 
-class CDESIAMTimelineVirtualTrack : public CDESBaseInterface
+class AFX_EXT_CLASS CDESIAMTimelineVirtualTrack : public CDESBaseInterface
 {
 public:
 	CDESIAMTimelineVirtualTrack(void);
@@ -22,4 +23,8 @@ private:
 	IAMTimelineVirtualTrack * m_pVirtualTrack;
 
 };
+
+
+#endif // DESIAMTimelineVirtualTrack_h__
+
 
