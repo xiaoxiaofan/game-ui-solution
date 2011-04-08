@@ -1,8 +1,10 @@
-#pragma once
+#ifndef DESBaseObject_h__
+#define DESBaseObject_h__
+
 #include "DESTimeLine.h"
 #include "DESPropertySetter.h"
 
-class CDESBaseObject
+class AFX_EXT_CLASS CDESBaseObject
 {
 public:
 	CDESBaseObject(CDESTimeLine * inTimeLine);
@@ -60,3 +62,4 @@ private:
 
 };
 
+#endif // DESBaseObject_h__

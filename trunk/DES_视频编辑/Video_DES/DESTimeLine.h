@@ -1,10 +1,11 @@
-#pragma once
+#ifndef DESTimeLine_h__
+#define DESTimeLine_h__
 
 #include <qedit.h>
 
 class CDESBaseObject;
 
-class CDESTimeLine
+class AFX_EXT_CLASS CDESTimeLine
 {
 private:
 	IAMTimeline * m_pTimeLine;
@@ -51,4 +52,6 @@ public:
 private:
 	void ReleaseSelf(void);
 };
+
+#endif // DESTimeLine_h__
 

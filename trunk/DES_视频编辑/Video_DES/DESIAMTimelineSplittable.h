@@ -1,7 +1,9 @@
-#pragma once
-#include "CDESBaseInterface.h"
+#ifndef DESIAMTimelineSplittable_h__
+#define DESIAMTimelineSplittable_h__
 
-class CDESIAMTimelineSplittable : public CDESBaseInterface
+#include "DESBaseInterface.h"
+
+class AFX_EXT_CLASS CDESIAMTimelineSplittable : public CDESBaseInterface
 {
 public:
 	CDESIAMTimelineSplittable(void);
@@ -21,6 +23,8 @@ private:
 private:
 	IAMTimelineSplittable * m_pSplittable;
 
-
 };
+
+#endif // DESIAMTimelineSplittable_h__
+
 

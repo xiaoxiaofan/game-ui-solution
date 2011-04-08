@@ -9,7 +9,8 @@
 
 ********************************************************************/
 
-#pragma once
+#ifndef DESBaseInterface_h__
+#define DESBaseInterface_h__
 
 /******************************************************************** 
 
@@ -22,7 +23,7 @@
 
 ********************************************************************/
 
-class CDESBaseInterface
+class AFX_EXT_CLASS CDESBaseInterface
 {
 public:
 	CDESBaseInterface(void);
@@ -40,4 +41,7 @@ protected:
 private:
 	void ReleaseSelf(void);
 };
+
+
+#endif // DESBaseInterface_h__
 

@@ -51,7 +51,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +102,9 @@
   <ItemGroup>
     <ClCompile Include="DESBaseInterface.cpp" />
     <ClCompile Include="DESBaseObject.cpp" />
+    <ClCompile Include="DESComposition.cpp" />
+    <ClCompile Include="DESEffect.cpp" />
+    <ClCompile Include="DESGroup.cpp" />
     <ClCompile Include="DESIAMTimelineEffectable.cpp" />
     <ClCompile Include="DESIAMTimelineSplittable.cpp" />
     <ClCompile Include="DESIAMTimelineTransable.cpp" />
@@ -109,6 +112,8 @@
     <ClCompile Include="DESPropertySetter.cpp" />
     <ClCompile Include="DESSource.cpp" />
     <ClCompile Include="DESTimeLine.cpp" />
+    <ClCompile Include="DESTrack.cpp" />
+    <ClCompile Include="DESTransition.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -118,13 +123,19 @@
   <ItemGroup>
     <ClInclude Include="DESBaseInterface.h" />
     <ClInclude Include="DESBaseObject.h" />
+    <ClInclude Include="DESComposition.h" />
+    <ClInclude Include="DESEffect.h" />
+    <ClInclude Include="DESGroup.h" />
     <ClInclude Include="DESIAMTimelineEffectable.h" />
     <ClInclude Include="DESIAMTimelineSplittable.h" />
     <ClInclude Include="DESIAMTimelineTransable.h" />
     <ClInclude Include="DESIAMTimelineVirtualTrack.h" />
+    <ClInclude Include="DESInterfaces.h" />
     <ClInclude Include="DESPropertySetter.h" />
     <ClInclude Include="DESSource.h" />
     <ClInclude Include="DESTimeLine.h" />
+    <ClInclude Include="DESTrack.h" />
+    <ClInclude Include="DESTransition.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

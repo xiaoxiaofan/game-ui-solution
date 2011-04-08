@@ -1,9 +1,11 @@
-#pragma once
-#include "CDESBaseInterface.h"
+#ifndef DESIAMTimelineEffectable_h__
+#define DESIAMTimelineEffectable_h__
+
+#include "DESBaseInterface.h"
 
 class CDESBaseObject;
 
-class CDESIAMTimelineEffectable : public CDESBaseInterface
+class AFX_EXT_CLASS CDESIAMTimelineEffectable : public CDESBaseInterface
 {
 public:
 	CDESIAMTimelineEffectable(void);
@@ -26,4 +28,7 @@ private:
 	IAMTimelineEffectable * m_pEffectable;
 
 };
+
+#endif // DESIAMTimelineEffectable_h__
+
 

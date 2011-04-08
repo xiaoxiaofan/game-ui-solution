@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video_DES", "Video_DES\Video_DES.vcxproj", "{BF74AF16-FA72-4705-BE01-64A3FCB525A7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDES", "DES\TestDES.vcxproj", "{9DB178FB-8D00-8154-A751-D5410BD24A87}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDES", "DES\TestDES.vcxproj", "{5DA25B0C-BD85-8363-4A8C-EEDAE91425C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dlltest", "dlltest\dlltest.vcxproj", "{653912EC-3FFF-4AFD-8F9D-2C3FAD8BE68E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,14 @@ Global
 		{BF74AF16-FA72-4705-BE01-64A3FCB525A7}.Debug|Win32.Build.0 = Debug|Win32
 		{BF74AF16-FA72-4705-BE01-64A3FCB525A7}.Release|Win32.ActiveCfg = Release|Win32
 		{BF74AF16-FA72-4705-BE01-64A3FCB525A7}.Release|Win32.Build.0 = Release|Win32
-		{9DB178FB-8D00-8154-A751-D5410BD24A87}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9DB178FB-8D00-8154-A751-D5410BD24A87}.Debug|Win32.Build.0 = Debug|Win32
-		{9DB178FB-8D00-8154-A751-D5410BD24A87}.Release|Win32.ActiveCfg = Release|Win32
-		{9DB178FB-8D00-8154-A751-D5410BD24A87}.Release|Win32.Build.0 = Release|Win32
+		{5DA25B0C-BD85-8363-4A8C-EEDAE91425C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5DA25B0C-BD85-8363-4A8C-EEDAE91425C5}.Debug|Win32.Build.0 = Debug|Win32
+		{5DA25B0C-BD85-8363-4A8C-EEDAE91425C5}.Release|Win32.ActiveCfg = Release|Win32
+		{5DA25B0C-BD85-8363-4A8C-EEDAE91425C5}.Release|Win32.Build.0 = Release|Win32
+		{653912EC-3FFF-4AFD-8F9D-2C3FAD8BE68E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{653912EC-3FFF-4AFD-8F9D-2C3FAD8BE68E}.Debug|Win32.Build.0 = Debug|Win32
+		{653912EC-3FFF-4AFD-8F9D-2C3FAD8BE68E}.Release|Win32.ActiveCfg = Release|Win32
+		{653912EC-3FFF-4AFD-8F9D-2C3FAD8BE68E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

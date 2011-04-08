@@ -1,10 +1,11 @@
-#pragma once
+#ifndef DESIAMTimelineTransable_h__
+#define DESIAMTimelineTransable_h__
 
-#include "CDESBaseInterface.h"
+#include "DESBaseInterface.h"
 
 class CDESBaseObject;
 
-class CDESIAMTimelineTransable : public CDESBaseInterface
+class AFX_EXT_CLASS CDESIAMTimelineTransable : public CDESBaseInterface
 {
 public:
 	CDESIAMTimelineTransable(void);
@@ -31,4 +32,8 @@ private:
 	IAMTimelineTransable * m_pTransable;
 
 };
+
+#endif // DESIAMTimelineTransable_h__
+
+
 
