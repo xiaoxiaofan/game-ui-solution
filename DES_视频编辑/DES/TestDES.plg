@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: TestDES - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\wxr\LOCALS~1\Temp\RSP1DE.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/TestDES.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\DS\DS\DES例子复件\复件 DES_视频编辑1\TestDESDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\wxr\LOCALS~1\Temp\RSP1DE.tmp" 
+Creating temporary file "C:\DOCUME~1\wxr\LOCALS~1\Temp\RSP1DF.tmp" with contents
+[
+strmiids.lib Strmbasd.lib Msvcrtd.lib Winmm.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/TestDES.pdb" /debug /machine:I386 /out:"Debug/TestDES.exe" /pdbtype:sept 
+".\Debug\CHelpDlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\TestDES.obj"
+".\Debug\TestDESDlg.obj"
+".\Debug\CDESBaseObject.obj"
+".\Debug\CDESMediaDetector.obj"
+".\Debug\CDESPropertySetter.obj"
+".\Debug\CDESRenderEngine.obj"
+".\Debug\CDESTimeLine.obj"
+".\Debug\CDESXml.obj"
+".\Debug\CDESComposition.obj"
+".\Debug\CDESEffect.obj"
+".\Debug\CDESGroup.obj"
+".\Debug\CDESSource.obj"
+".\Debug\CDESTrack.obj"
+".\Debug\CDESTransition.obj"
+".\Debug\CDESBaseInterface.obj"
+".\Debug\CDESIAMTimelineEffectable.obj"
+".\Debug\CDESIAMTimelineSplittable.obj"
+".\Debug\CDESIAMTimelineTransable.obj"
+".\Debug\CDESIAMTimelineVirtualTrack.obj"
+".\Debug\CDESGuid.obj"
+".\Debug\CDESSourceNode.obj"
+".\Debug\UDESUtils.obj"
+".\Debug\StWaitCursor.obj"
+".\Debug\TestDES.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\wxr\LOCALS~1\Temp\RSP1DF.tmp"
+<h3>Output Window</h3>
+Compiling...
+TestDESDlg.cpp
+STREAMS.H included TWICE
+Linking...
+
+
+
+<h3>Results</h3>
+TestDES.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>
