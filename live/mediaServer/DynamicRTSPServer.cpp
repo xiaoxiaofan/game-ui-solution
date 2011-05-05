@@ -21,6 +21,9 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "DynamicRTSPServer.hh"
 #include <liveMedia.hh>
 #include <string.h>
+#include "HardwareSingleVideoSource.hh"
+#include "BaseInputVideo.hh"
+#include "OStreamOnDemandSMS.hh"
 
 DynamicRTSPServer*
 DynamicRTSPServer::createNew(UsageEnvironment& env, Port ourPort,
@@ -56,7 +59,7 @@ DynamicRTSPServer::lookupServerMediaSession(char const* streamName) {
   // First, check whether the specified "streamName" exists as a local file:
   FILE* fid = fopen(streamName, "rb");
   Boolean fileExists = fid != NULL;
-
+  DWORD error = GetLastError();
   // Next, check whether we already have a "ServerMediaSession" for this file:
   ServerMediaSession* sms = RTSPServer::lookupServerMediaSession(streamName);
   Boolean smsExists = sms != NULL;
@@ -161,7 +164,42 @@ static ServerMediaSession* createNewSMS(UsageEnvironment& env,
 
     NEW_SMS("DV Video");
     sms->addSubsession(DVVideoFileServerMediaSubsession::createNew(env, fileName, reuseSource));
+  }else if (strcmp(extension, ".live") == 0) {
+	  // Assumed to be a DV Video file
+	  // First, make sure that the RTPSinks' buffers will be large enough to handle the huge size of DV frames (as big as 288000).
+	  OutPacketBuffer::maxSize = 300000;
+
+	  BaseInputVideo* input_video = new HardwareSingleVideoSource(0);
+	  int port;
+
+	  ::sscanf(fileName,"%*[^-]-%d.live",&port);
+
+	  OStreamOnDemandSMS *on_demand_sms = OStreamOnDemandSMS::createNew(env, true, NULL, OSTREAM_ENCODING_MJPEG, port);
+
+	  NEW_SMS("live Video");
+	  Boolean useADUs = False;
+	  Interleaving* interleaving = NULL;
+	  sms->addSubsession(on_demand_sms);
+
+
   }
+  else if (strcmp(extension, ".test") == 0) {
+	  OutPacketBuffer::maxSize = 300000;
+
+	  BaseInputVideo* input_video = new HardwareSingleVideoSource(0);
+
+	  //BaseInputVideo* input_video =new  StreamSingleVideoSource();
+
+	  OStreamOnDemandSMS *on_demand_sms = OStreamOnDemandSMS::createNew(env, true, input_video, OSTREAM_ENCODING_H263P, -1 );
+
+	  NEW_SMS("live Video");
+	  Boolean useADUs = False;
+	  Interleaving* interleaving = NULL;
+	  sms->addSubsession(on_demand_sms);
+
+  }
+
+
 
   return sms;
 }

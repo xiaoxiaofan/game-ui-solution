@@ -468,6 +468,30 @@
     <None Include="..\UsageEnvironment\include\UsageEnvironment_version.hh">
       <Filter>UsageEnvironment</Filter>
     </None>
+    <None Include="BaseInputVideo.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="HardwareSingleVideoSource.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="OStreamOnDemandSMS.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="H263plusVideoSource.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="OStreamReceiver.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="OStreamVideoDecoder.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="OStreamVideoEncoder.hh">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="OStreamBufferedSink.hh">
+      <Filter>头文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicRTSPServer.cpp">
@@ -907,6 +931,30 @@
     </ClCompile>
     <ClCompile Include="..\groupsock\NetAddress.cpp">
       <Filter>groupsock</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseInputVideo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HardwareSingleVideoSource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OStreamOnDemandSMS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="H263plusVideoSource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OStreamReceiver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OStreamVideoDecoder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OStreamVideoEncoder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OStreamBufferedSink.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

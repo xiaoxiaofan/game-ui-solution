@@ -153,6 +153,8 @@ public:
 
   unsigned sessionTimeoutParameter() const { return fSessionTimeoutParameter; }
 
+  int describeStatus() const { return fResultCode; }
+
   static unsigned responseBufferSize;
 
 protected:

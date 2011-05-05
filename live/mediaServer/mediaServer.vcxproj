@@ -36,12 +36,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>D:\workspace\google code\live\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenCV2.2\3rdparty\include;C:\OpenCV2.2\3rdparty\include\ffmpeg_;C:\OpenCV2.2\include\opencv;C:\OpenCV2.2\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -54,11 +57,13 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -207,7 +212,15 @@
     <None Include="..\UsageEnvironment\include\strDup.hh" />
     <None Include="..\UsageEnvironment\include\UsageEnvironment.hh" />
     <None Include="..\UsageEnvironment\include\UsageEnvironment_version.hh" />
+    <None Include="BaseInputVideo.hh" />
     <None Include="DynamicRTSPServer.hh" />
+    <None Include="H263plusVideoSource.hh" />
+    <None Include="HardwareSingleVideoSource.hh" />
+    <None Include="OStreamBufferedSink.hh" />
+    <None Include="OStreamOnDemandSMS.hh" />
+    <None Include="OStreamReceiver.hh" />
+    <None Include="OStreamVideoDecoder.hh" />
+    <None Include="OStreamVideoEncoder.hh" />
     <None Include="version.hh" />
   </ItemGroup>
   <ItemGroup>
@@ -355,8 +368,16 @@
     <ClCompile Include="..\UsageEnvironment\HashTable.cpp" />
     <ClCompile Include="..\UsageEnvironment\strDup.cpp" />
     <ClCompile Include="..\UsageEnvironment\UsageEnvironment.cpp" />
+    <ClCompile Include="BaseInputVideo.cpp" />
     <ClCompile Include="DynamicRTSPServer.cpp" />
+    <ClCompile Include="H263plusVideoSource.cpp" />
+    <ClCompile Include="HardwareSingleVideoSource.cpp" />
     <ClCompile Include="live555MediaServer.cpp" />
+    <ClCompile Include="OStreamBufferedSink.cpp" />
+    <ClCompile Include="OStreamOnDemandSMS.cpp" />
+    <ClCompile Include="OStreamReceiver.cpp" />
+    <ClCompile Include="OStreamVideoDecoder.cpp" />
+    <ClCompile Include="OStreamVideoEncoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\groupsock\include\NetCommon.h" />
