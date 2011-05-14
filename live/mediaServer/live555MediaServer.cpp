@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
   portNumBits rtspServerPortNum = 554;
   rtspServer = DynamicRTSPServer::createNew(*env, rtspServerPortNum, authDB);
   if (rtspServer == NULL) {
-    rtspServerPortNum = 8554;
-    rtspServer = DynamicRTSPServer::createNew(*env, rtspServerPortNum, authDB);
+	  rtspServerPortNum = 8554;
+	  rtspServer = DynamicRTSPServer::createNew(*env, rtspServerPortNum, authDB);
   }
   if (rtspServer == NULL) {
     *env << "Failed to create RTSP server: " << env->getResultMsg() << "\n";

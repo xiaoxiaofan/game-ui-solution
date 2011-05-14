@@ -22,3 +22,8 @@
 #pragma comment(lib,"avutil.lib")
 #pragma comment(lib,"swscale.lib")
 #endif
+
+
+#ifndef Export_h__
+#include "Export.h"
+#endif

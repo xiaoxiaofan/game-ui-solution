@@ -47,7 +47,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #define mediumNameMaxLen 30
 
-class Medium {
+class MEDIASERVER_API Medium {
 public:
   static Boolean lookupByName(UsageEnvironment& env,
 			      char const* mediumName,

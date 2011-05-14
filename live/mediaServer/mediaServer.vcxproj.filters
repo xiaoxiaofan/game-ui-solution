@@ -27,12 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DynamicRTSPServer.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="version.hh">
-      <Filter>头文件</Filter>
-    </None>
     <None Include="..\BasicUsageEnvironment\include\BasicHashTable.hh">
       <Filter>BasicUsageEnvironment</Filter>
     </None>
@@ -74,6 +68,21 @@
     </None>
     <None Include="..\groupsock\include\TunnelEncaps.hh">
       <Filter>groupsock</Filter>
+    </None>
+    <None Include="..\UsageEnvironment\include\Boolean.hh">
+      <Filter>UsageEnvironment</Filter>
+    </None>
+    <None Include="..\UsageEnvironment\include\HashTable.hh">
+      <Filter>UsageEnvironment</Filter>
+    </None>
+    <None Include="..\UsageEnvironment\include\strDup.hh">
+      <Filter>UsageEnvironment</Filter>
+    </None>
+    <None Include="..\UsageEnvironment\include\UsageEnvironment.hh">
+      <Filter>UsageEnvironment</Filter>
+    </None>
+    <None Include="..\UsageEnvironment\include\UsageEnvironment_version.hh">
+      <Filter>UsageEnvironment</Filter>
     </None>
     <None Include="..\liveMedia\include\AC3AudioRTPSink.hh">
       <Filter>liveMedia</Filter>
@@ -118,6 +127,9 @@
       <Filter>liveMedia</Filter>
     </None>
     <None Include="..\liveMedia\include\Base64.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\BaseInputVideo.hh">
       <Filter>liveMedia</Filter>
     </None>
     <None Include="..\liveMedia\include\BasicUDPSink.hh">
@@ -183,6 +195,9 @@
     <None Include="..\liveMedia\include\H263plusVideoRTPSource.hh">
       <Filter>liveMedia</Filter>
     </None>
+    <None Include="..\liveMedia\include\H263plusVideoSource.hh">
+      <Filter>liveMedia</Filter>
+    </None>
     <None Include="..\liveMedia\include\H263plusVideoStreamFramer.hh">
       <Filter>liveMedia</Filter>
     </None>
@@ -202,6 +217,9 @@
       <Filter>liveMedia</Filter>
     </None>
     <None Include="..\liveMedia\include\H264VideoStreamFramer.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\HardwareSingleVideoSource.hh">
       <Filter>liveMedia</Filter>
     </None>
     <None Include="..\liveMedia\include\HTTPSink.hh">
@@ -369,6 +387,21 @@
     <None Include="..\liveMedia\include\OnDemandServerMediaSubsession.hh">
       <Filter>liveMedia</Filter>
     </None>
+    <None Include="..\liveMedia\include\OStreamBufferedSink.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\OStreamOnDemandSMS.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\OStreamReceiver.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\OStreamVideoDecoder.hh">
+      <Filter>liveMedia</Filter>
+    </None>
+    <None Include="..\liveMedia\include\OStreamVideoEncoder.hh">
+      <Filter>liveMedia</Filter>
+    </None>
     <None Include="..\liveMedia\include\OutputFile.hh">
       <Filter>liveMedia</Filter>
     </None>
@@ -429,6 +462,9 @@
     <None Include="..\liveMedia\include\WAVAudioFileSource.hh">
       <Filter>liveMedia</Filter>
     </None>
+    <None Include="..\liveMedia\COPYING">
+      <Filter>liveMedia</Filter>
+    </None>
     <None Include="..\liveMedia\StreamParser.hh">
       <Filter>liveMedia</Filter>
     </None>
@@ -453,53 +489,17 @@
     <None Include="..\liveMedia\BitVector.hh">
       <Filter>liveMedia</Filter>
     </None>
-    <None Include="..\UsageEnvironment\include\Boolean.hh">
-      <Filter>UsageEnvironment</Filter>
+    <None Include="..\liveMedia\Makefile.head">
+      <Filter>liveMedia</Filter>
     </None>
-    <None Include="..\UsageEnvironment\include\HashTable.hh">
-      <Filter>UsageEnvironment</Filter>
-    </None>
-    <None Include="..\UsageEnvironment\include\strDup.hh">
-      <Filter>UsageEnvironment</Filter>
-    </None>
-    <None Include="..\UsageEnvironment\include\UsageEnvironment.hh">
-      <Filter>UsageEnvironment</Filter>
-    </None>
-    <None Include="..\UsageEnvironment\include\UsageEnvironment_version.hh">
-      <Filter>UsageEnvironment</Filter>
-    </None>
-    <None Include="BaseInputVideo.hh">
+    <None Include="DynamicRTSPServer.hh">
       <Filter>头文件</Filter>
     </None>
-    <None Include="HardwareSingleVideoSource.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="OStreamOnDemandSMS.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="H263plusVideoSource.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="OStreamReceiver.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="OStreamVideoDecoder.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="OStreamVideoEncoder.hh">
-      <Filter>头文件</Filter>
-    </None>
-    <None Include="OStreamBufferedSink.hh">
+    <None Include="version.hh">
       <Filter>头文件</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicRTSPServer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="live555MediaServer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\BasicUsageEnvironment\BasicHashTable.cpp">
       <Filter>BasicUsageEnvironment</Filter>
     </ClCompile>
@@ -535,6 +535,21 @@
     </ClCompile>
     <ClCompile Include="..\groupsock\NetInterface.cpp">
       <Filter>groupsock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UsageEnvironment\HashTable.cpp">
+      <Filter>UsageEnvironment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UsageEnvironment\strDup.cpp">
+      <Filter>UsageEnvironment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UsageEnvironment\UsageEnvironment.cpp">
+      <Filter>UsageEnvironment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\groupsock\NetAddress.cpp">
+      <Filter>groupsock</Filter>
+    </ClCompile>
+    <ClCompile Include="LiveSource.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\WAVAudioFileSource.cpp">
       <Filter>liveMedia</Filter>
@@ -597,6 +612,21 @@
       <Filter>liveMedia</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\OutputFile.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\OStreamVideoEncoder.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\OStreamVideoDecoder.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\OStreamReceiver.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\OStreamOnDemandSMS.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\OStreamBufferedSink.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\OnDemandServerMediaSubsession.cpp">
@@ -776,6 +806,9 @@
     <ClCompile Include="..\liveMedia\HTTPSink.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
+    <ClCompile Include="..\liveMedia\HardwareSingleVideoSource.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
     <ClCompile Include="..\liveMedia\H264VideoStreamFramer.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
@@ -798,6 +831,9 @@
       <Filter>liveMedia</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\H263plusVideoStreamFramer.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\H263plusVideoSource.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\H263plusVideoRTPSource.cpp">
@@ -866,6 +902,9 @@
     <ClCompile Include="..\liveMedia\BasicUDPSink.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
+    <ClCompile Include="..\liveMedia\BaseInputVideo.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
     <ClCompile Include="..\liveMedia\Base64.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
@@ -920,40 +959,13 @@
     <ClCompile Include="..\liveMedia\our_md5.c">
       <Filter>liveMedia</Filter>
     </ClCompile>
-    <ClCompile Include="..\UsageEnvironment\HashTable.cpp">
-      <Filter>UsageEnvironment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UsageEnvironment\strDup.cpp">
-      <Filter>UsageEnvironment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UsageEnvironment\UsageEnvironment.cpp">
-      <Filter>UsageEnvironment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\groupsock\NetAddress.cpp">
-      <Filter>groupsock</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseInputVideo.cpp">
+    <ClCompile Include="live555MediaServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HardwareSingleVideoSource.cpp">
+    <ClCompile Include="DynamicRTSPServer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="OStreamOnDemandSMS.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="H263plusVideoSource.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OStreamReceiver.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OStreamVideoDecoder.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OStreamVideoEncoder.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OStreamBufferedSink.cpp">
+    <ClCompile Include="version.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -961,11 +973,17 @@
     <ClInclude Include="..\groupsock\include\NetCommon.h">
       <Filter>groupsock</Filter>
     </ClInclude>
+    <ClInclude Include="LiveSource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="..\liveMedia\rtcp_from_spec.h">
       <Filter>liveMedia</Filter>
     </ClInclude>
     <ClInclude Include="..\liveMedia\our_md5.h">
       <Filter>liveMedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Export.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

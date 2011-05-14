@@ -186,7 +186,7 @@ static ServerMediaSession* createNewSMS(UsageEnvironment& env,
   else if (strcmp(extension, ".test") == 0) {
 	  OutPacketBuffer::maxSize = 300000;
 
-	  BaseInputVideo* input_video = new HardwareSingleVideoSource(0);
+	  BaseInputVideo* input_video = new HardwareSingleVideoSource(2);
 
 	  //BaseInputVideo* input_video =new  StreamSingleVideoSource();
 
