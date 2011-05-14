@@ -34,7 +34,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 // A data structure used for optional user/password authentication:
 
-class MEDIASERVER_API UserAuthenticationDatabase {
+class UserAuthenticationDatabase {
 public:
   UserAuthenticationDatabase(char const* realm = NULL,
 			     Boolean passwordsAreMD5 = False);
@@ -60,7 +60,7 @@ protected:
 
 #define RTSP_BUFFER_SIZE 10000 // for incoming requests, and outgoing responses
 
-class MEDIASERVER_API RTSPServer: public Medium {
+class RTSPServer: public Medium {
 public:
   static RTSPServer* createNew(UsageEnvironment& env, Port ourPort = 554,
 			       UserAuthenticationDatabase* authDatabase = NULL,
