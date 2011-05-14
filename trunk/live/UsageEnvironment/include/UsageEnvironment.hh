@@ -17,6 +17,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 // Usage Environment
 // C++ header
 
+
+
 #ifndef _USAGE_ENVIRONMENT_HH
 #define _USAGE_ENVIRONMENT_HH
 

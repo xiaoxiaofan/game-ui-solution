@@ -16,9 +16,9 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -38,13 +38,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>D:\workspace\google code\live\lib;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\OpenCV2.2\3rdparty\include;C:\OpenCV2.2\3rdparty\include\ffmpeg_;C:\OpenCV2.2\include\opencv;C:\OpenCV2.2\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\mediaServer;C:\OpenCV2.2\3rdparty\include;C:\OpenCV2.2\3rdparty\include\ffmpeg_;C:\OpenCV2.2\include\opencv;C:\OpenCV2.2\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG;MEDIASERVER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>version.hh</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -82,6 +84,7 @@
     <None Include="..\groupsock\include\NetInterface.hh" />
     <None Include="..\groupsock\include\TunnelEncaps.hh" />
     <None Include="..\liveMedia\BitVector.hh" />
+    <None Include="..\liveMedia\COPYING" />
     <None Include="..\liveMedia\H263plusVideoStreamParser.hh" />
     <None Include="..\liveMedia\include\AC3AudioRTPSink.hh" />
     <None Include="..\liveMedia\include\AC3AudioRTPSource.hh" />
@@ -98,6 +101,7 @@
     <None Include="..\liveMedia\include\AudioRTPSink.hh" />
     <None Include="..\liveMedia\include\AVIFileSink.hh" />
     <None Include="..\liveMedia\include\Base64.hh" />
+    <None Include="..\liveMedia\include\BaseInputVideo.hh" />
     <None Include="..\liveMedia\include\BasicUDPSink.hh" />
     <None Include="..\liveMedia\include\BasicUDPSource.hh" />
     <None Include="..\liveMedia\include\ByteStreamFileSource.hh" />
@@ -119,6 +123,7 @@
     <None Include="..\liveMedia\include\H263plusVideoFileServerMediaSubsession.hh" />
     <None Include="..\liveMedia\include\H263plusVideoRTPSink.hh" />
     <None Include="..\liveMedia\include\H263plusVideoRTPSource.hh" />
+    <None Include="..\liveMedia\include\H263plusVideoSource.hh" />
     <None Include="..\liveMedia\include\H263plusVideoStreamFramer.hh" />
     <None Include="..\liveMedia\include\H264VideoFileServerMediaSubsession.hh" />
     <None Include="..\liveMedia\include\H264VideoFileSink.hh" />
@@ -126,6 +131,7 @@
     <None Include="..\liveMedia\include\H264VideoRTPSource.hh" />
     <None Include="..\liveMedia\include\H264VideoStreamDiscreteFramer.hh" />
     <None Include="..\liveMedia\include\H264VideoStreamFramer.hh" />
+    <None Include="..\liveMedia\include\HardwareSingleVideoSource.hh" />
     <None Include="..\liveMedia\include\HTTPSink.hh" />
     <None Include="..\liveMedia\include\InputFile.hh" />
     <None Include="..\liveMedia\include\JPEGVideoRTPSink.hh" />
@@ -181,6 +187,11 @@
     <None Include="..\liveMedia\include\MultiFramedRTPSink.hh" />
     <None Include="..\liveMedia\include\MultiFramedRTPSource.hh" />
     <None Include="..\liveMedia\include\OnDemandServerMediaSubsession.hh" />
+    <None Include="..\liveMedia\include\OStreamBufferedSink.hh" />
+    <None Include="..\liveMedia\include\OStreamOnDemandSMS.hh" />
+    <None Include="..\liveMedia\include\OStreamReceiver.hh" />
+    <None Include="..\liveMedia\include\OStreamVideoDecoder.hh" />
+    <None Include="..\liveMedia\include\OStreamVideoEncoder.hh" />
     <None Include="..\liveMedia\include\OutputFile.hh" />
     <None Include="..\liveMedia\include\PassiveServerMediaSubsession.hh" />
     <None Include="..\liveMedia\include\QCELPAudioRTPSource.hh" />
@@ -201,6 +212,7 @@
     <None Include="..\liveMedia\include\VideoRTPSink.hh" />
     <None Include="..\liveMedia\include\WAVAudioFileServerMediaSubsession.hh" />
     <None Include="..\liveMedia\include\WAVAudioFileSource.hh" />
+    <None Include="..\liveMedia\Makefile.head" />
     <None Include="..\liveMedia\MP3ADUdescriptor.hh" />
     <None Include="..\liveMedia\MP3Internals.hh" />
     <None Include="..\liveMedia\MP3InternalsHuffman.hh" />
@@ -212,15 +224,9 @@
     <None Include="..\UsageEnvironment\include\strDup.hh" />
     <None Include="..\UsageEnvironment\include\UsageEnvironment.hh" />
     <None Include="..\UsageEnvironment\include\UsageEnvironment_version.hh" />
-    <None Include="BaseInputVideo.hh" />
-    <None Include="DynamicRTSPServer.hh" />
-    <None Include="H263plusVideoSource.hh" />
-    <None Include="HardwareSingleVideoSource.hh" />
-    <None Include="OStreamBufferedSink.hh" />
-    <None Include="OStreamOnDemandSMS.hh" />
-    <None Include="OStreamReceiver.hh" />
-    <None Include="OStreamVideoDecoder.hh" />
-    <None Include="OStreamVideoEncoder.hh" />
+    <None Include="DynamicRTSPServer.hh">
+      <FileType>Document</FileType>
+    </None>
     <None Include="version.hh" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +258,7 @@
     <ClCompile Include="..\liveMedia\AudioRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\AVIFileSink.cpp" />
     <ClCompile Include="..\liveMedia\Base64.cpp" />
+    <ClCompile Include="..\liveMedia\BaseInputVideo.cpp" />
     <ClCompile Include="..\liveMedia\BasicUDPSink.cpp" />
     <ClCompile Include="..\liveMedia\BasicUDPSource.cpp" />
     <ClCompile Include="..\liveMedia\BitVector.cpp" />
@@ -274,6 +281,7 @@
     <ClCompile Include="..\liveMedia\H263plusVideoFileServerMediaSubsession.cpp" />
     <ClCompile Include="..\liveMedia\H263plusVideoRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\H263plusVideoRTPSource.cpp" />
+    <ClCompile Include="..\liveMedia\H263plusVideoSource.cpp" />
     <ClCompile Include="..\liveMedia\H263plusVideoStreamFramer.cpp" />
     <ClCompile Include="..\liveMedia\H263plusVideoStreamParser.cpp" />
     <ClCompile Include="..\liveMedia\H264VideoFileServerMediaSubsession.cpp" />
@@ -282,6 +290,7 @@
     <ClCompile Include="..\liveMedia\H264VideoRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\H264VideoStreamDiscreteFramer.cpp" />
     <ClCompile Include="..\liveMedia\H264VideoStreamFramer.cpp" />
+    <ClCompile Include="..\liveMedia\HardwareSingleVideoSource.cpp" />
     <ClCompile Include="..\liveMedia\HTTPSink.cpp" />
     <ClCompile Include="..\liveMedia\InputFile.cpp" />
     <ClCompile Include="..\liveMedia\JPEGVideoRTPSink.cpp" />
@@ -341,6 +350,11 @@
     <ClCompile Include="..\liveMedia\MultiFramedRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\MultiFramedRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\OnDemandServerMediaSubsession.cpp" />
+    <ClCompile Include="..\liveMedia\OStreamBufferedSink.cpp" />
+    <ClCompile Include="..\liveMedia\OStreamOnDemandSMS.cpp" />
+    <ClCompile Include="..\liveMedia\OStreamReceiver.cpp" />
+    <ClCompile Include="..\liveMedia\OStreamVideoDecoder.cpp" />
+    <ClCompile Include="..\liveMedia\OStreamVideoEncoder.cpp" />
     <ClCompile Include="..\liveMedia\our_md5.c" />
     <ClCompile Include="..\liveMedia\our_md5hl.c" />
     <ClCompile Include="..\liveMedia\OutputFile.cpp" />
@@ -368,21 +382,17 @@
     <ClCompile Include="..\UsageEnvironment\HashTable.cpp" />
     <ClCompile Include="..\UsageEnvironment\strDup.cpp" />
     <ClCompile Include="..\UsageEnvironment\UsageEnvironment.cpp" />
-    <ClCompile Include="BaseInputVideo.cpp" />
     <ClCompile Include="DynamicRTSPServer.cpp" />
-    <ClCompile Include="H263plusVideoSource.cpp" />
-    <ClCompile Include="HardwareSingleVideoSource.cpp" />
     <ClCompile Include="live555MediaServer.cpp" />
-    <ClCompile Include="OStreamBufferedSink.cpp" />
-    <ClCompile Include="OStreamOnDemandSMS.cpp" />
-    <ClCompile Include="OStreamReceiver.cpp" />
-    <ClCompile Include="OStreamVideoDecoder.cpp" />
-    <ClCompile Include="OStreamVideoEncoder.cpp" />
+    <ClCompile Include="LiveSource.cpp" />
+    <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\groupsock\include\NetCommon.h" />
     <ClInclude Include="..\liveMedia\our_md5.h" />
     <ClInclude Include="..\liveMedia\rtcp_from_spec.h" />
+    <ClInclude Include="Export.h" />
+    <ClInclude Include="LiveSource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

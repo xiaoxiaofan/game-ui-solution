@@ -24,7 +24,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "BasicUsageEnvironment0.hh"
 #endif
 
-class BasicUsageEnvironment: public BasicUsageEnvironment0 {
+
+class MEDIASERVER_API BasicUsageEnvironment: public BasicUsageEnvironment0 {
 public:
   static BasicUsageEnvironment* createNew(TaskScheduler& taskScheduler);
 
@@ -44,7 +45,7 @@ protected:
 };
 
 
-class BasicTaskScheduler: public BasicTaskScheduler0 {
+class MEDIASERVER_API BasicTaskScheduler: public BasicTaskScheduler0 {
 public:
   static BasicTaskScheduler* createNew();
   virtual ~BasicTaskScheduler();

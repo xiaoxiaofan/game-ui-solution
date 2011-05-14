@@ -24,6 +24,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #ifndef _SERVER_MEDIA_SESSION_HH
 #include "ServerMediaSession.hh"
 #endif
+
 #ifndef _NET_ADDRESS_HH
 #include "NetAddress.hh"
 #endif
@@ -33,7 +34,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 // A data structure used for optional user/password authentication:
 
-class UserAuthenticationDatabase {
+class MEDIASERVER_API UserAuthenticationDatabase {
 public:
   UserAuthenticationDatabase(char const* realm = NULL,
 			     Boolean passwordsAreMD5 = False);
@@ -59,7 +60,7 @@ protected:
 
 #define RTSP_BUFFER_SIZE 10000 // for incoming requests, and outgoing responses
 
-class RTSPServer: public Medium {
+class MEDIASERVER_API RTSPServer: public Medium {
 public:
   static RTSPServer* createNew(UsageEnvironment& env, Port ourPort = 554,
 			       UserAuthenticationDatabase* authDatabase = NULL,
