@@ -49,9 +49,9 @@ public:
 	 *        input_video is NULL, and viceversa
 	 * @param stream_id Stream id. Defaults to 0.
 	 */
-  	static OStreamOnDemandSMS *
+	static OStreamOnDemandSMS *
 	createNew( UsageEnvironment& env, bool reuseFirstSource, BaseInputVideo *input_video,
-			   int encoding_type, int audio_port, int stream_id = 0 );
+		int encoding_type, int audio_port, int stream_id = 0 );
 
 	virtual ~OStreamOnDemandSMS();
 protected:
