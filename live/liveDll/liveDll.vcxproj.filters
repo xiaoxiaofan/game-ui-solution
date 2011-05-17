@@ -1000,9 +1000,6 @@
     <ClInclude Include="..\liveMedia\include\UnKnowLiveSource.h">
       <Filter>liveMedia</Filter>
     </ClInclude>
-    <ClInclude Include="..\live\UnKonwLiveRTPSink.h">
-      <Filter>liveMedia</Filter>
-    </ClInclude>
     <ClInclude Include="..\liveMedia\include\UnKonwLiveRTPSink.h">
       <Filter>liveMedia</Filter>
     </ClInclude>
