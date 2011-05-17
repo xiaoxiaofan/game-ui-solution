@@ -235,6 +235,8 @@ private:
   HashTable* fClientSessionsForHTTPTunneling; // ditto (maps 'session cookie' strings to "RTSPClientSession"s)
   UserAuthenticationDatabase* fAuthDB;
   unsigned fReclamationTestSeconds;
+
+  //用来保存已经在访问的的媒体文件
   HashTable* fServerMediaSessions;
 };
 

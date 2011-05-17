@@ -24,6 +24,7 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "BaseInputVideo.hh"
 #include "HardwareSingleVideoSource.hh"
 #include "OStreamOnDemandSMS.hh"
+#include "LiveStreamOnDemandSMS.h"
 
 DynamicRTSPServer*
 DynamicRTSPServer::createNew(UsageEnvironment& env, Port ourPort,
@@ -31,6 +32,7 @@ DynamicRTSPServer::createNew(UsageEnvironment& env, Port ourPort,
 			     unsigned reclamationTestSeconds) {
   int ourSocket = -1;
 
+  //初始化套接字端口
   do {
     int ourSocket = setUpOurSocket(env, ourPort);
     if (ourSocket == -1) break;
@@ -170,12 +172,15 @@ static ServerMediaSession* createNewSMS(UsageEnvironment& env,
 	  // First, make sure that the RTPSinks' buffers will be large enough to handle the huge size of DV frames (as big as 288000).
 	  OutPacketBuffer::maxSize = 300000;
 
-	  BaseInputVideo* input_video = new HardwareSingleVideoSource(0);
-	  int port;
-
-	  ::sscanf(fileName,"%*[^-]-%d.live",&port);
-
-	  OStreamOnDemandSMS *on_demand_sms = OStreamOnDemandSMS::createNew(env, true, NULL, OSTREAM_ENCODING_MJPEG, port);
+	 /*
+	   BaseInputVideo* input_video = new HardwareSingleVideoSource(0);
+	  	  int port;
+	  
+	  	  ::sscanf(fileName,"%*[^-]-%d.live",&port);
+	  
+	  	  OStreamOnDemandSMS *on_demand_sms = OStreamOnDemandSMS::createNew(env, true, NULL, OSTREAM_ENCODING_MJPEG, port);*/
+	  
+	  LiveStreamOnDemandSMS *on_demand_sms = new LiveStreamOnDemandSMS(env,true,-1);
 
 	  NEW_SMS("live Video");
 	  Boolean useADUs = False;
