@@ -21,7 +21,6 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 #include "DynamicRTSPServer.hh"
 #include "version.hh"
 
-
 #pragma comment(lib,"opencv_imgproc220d.lib")
 #pragma comment(lib,"opencv_highgui220d.lib")
 #pragma comment(lib,"opencv_ffmpeg220d.lib")

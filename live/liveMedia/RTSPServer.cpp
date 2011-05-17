@@ -256,6 +256,8 @@ void RTSPServer::incomingConnectionHandlerHTTP1() {
   incomingConnectionHandler(fHTTPServerSocket);
 }
 
+//启动服务器时，注册了监听套接字，
+
 void RTSPServer::incomingConnectionHandler(int serverSocket) {
   struct sockaddr_in clientAddr;
   SOCKLEN_T clientAddrLen = sizeof clientAddr;
@@ -344,6 +346,7 @@ void RTSPServer::RTSPClientSession::resetRequestBuffer() {
   fBase64RemainderCount = 0;
 }
 
+//处理第一次连接的数据
 void RTSPServer::RTSPClientSession::incomingRequestHandler(void* instance, int /*mask*/) {
   RTSPClientSession* session = (RTSPClientSession*)instance;
   session->incomingRequestHandler1();
@@ -397,9 +400,9 @@ void RTSPServer::RTSPClientSession::handleRequestBytes(int newBytesRead) {
     if (numBytesToDecode > 0) {
       ptr[newBytesRead] = '\0';
       unsigned decodedSize;
-      unsigned char* decodedBytes = base64Decode((char*)(ptr-fBase64RemainderCount), decodedSize);
+	  unsigned char* decodedBytes = base64Decode((char*)(ptr-fBase64RemainderCount), decodedSize);
 #ifdef DEBUG
-      fprintf(stderr, "Base64-decided %d input bytes into %d new bytes:", numBytesToDecode, decodedSize);
+	  fprintf(stderr, "Base64-decided %d input bytes into %d new bytes:", numBytesToDecode, decodedSize);
       for (unsigned k = 0; k < decodedSize; ++k) fprintf(stderr, "%c", decodedBytes[k]);
       fprintf(stderr, "\n");
 #endif
@@ -736,6 +739,9 @@ static Boolean parsePlayNowHeader(char const* buf) {
 
   return True;
 }
+
+
+// setup 是记录每个流描述和状态
 
 void RTSPServer::RTSPClientSession
 ::handleCmd_SETUP(char const* cseq,

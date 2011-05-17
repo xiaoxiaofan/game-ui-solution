@@ -498,16 +498,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="live.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Export.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\groupsock\include\NetCommon.h">
@@ -519,12 +510,24 @@
     <ClInclude Include="..\liveMedia\rtcp_from_spec.h">
       <Filter>liveMedia</Filter>
     </ClInclude>
+    <ClInclude Include="..\liveMedia\include\LiveSource.h">
+      <Filter>liveMedia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\liveMedia\include\LiveStreamOnDemandSMS.h">
+      <Filter>liveMedia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\liveMedia\include\UnKnowLiveSource.h">
+      <Filter>liveMedia</Filter>
+    </ClInclude>
+    <ClInclude Include="..\liveMedia\include\UnKonwLiveRTPSink.h">
+      <Filter>liveMedia</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="live.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\BasicUsageEnvironment\BasicHashTable.cpp">
@@ -987,6 +990,18 @@
       <Filter>liveMedia</Filter>
     </ClCompile>
     <ClCompile Include="..\liveMedia\WAVAudioFileSource.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\LiveSource.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\LiveStreamOnDemandSMS.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\UnKnowLiveSource.cpp">
+      <Filter>liveMedia</Filter>
+    </ClCompile>
+    <ClCompile Include="..\liveMedia\UnKonwLiveRTPSink.cpp">
       <Filter>liveMedia</Filter>
     </ClCompile>
   </ItemGroup>

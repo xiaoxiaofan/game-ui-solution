@@ -235,10 +235,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\groupsock\include\NetCommon.h" />
+    <ClInclude Include="..\liveMedia\include\LiveSource.h" />
+    <ClInclude Include="..\liveMedia\include\LiveStreamOnDemandSMS.h" />
+    <ClInclude Include="..\liveMedia\include\UnKnowLiveSource.h" />
+    <ClInclude Include="..\liveMedia\include\UnKonwLiveRTPSink.h" />
     <ClInclude Include="..\liveMedia\our_md5.h" />
     <ClInclude Include="..\liveMedia\rtcp_from_spec.h" />
-    <ClInclude Include="Export.h" />
-    <ClInclude Include="live.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -309,6 +311,8 @@
     <ClCompile Include="..\liveMedia\JPEGVideoRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\JPEGVideoRTPSource.cpp" />
     <ClCompile Include="..\liveMedia\JPEGVideoSource.cpp" />
+    <ClCompile Include="..\liveMedia\LiveSource.cpp" />
+    <ClCompile Include="..\liveMedia\LiveStreamOnDemandSMS.cpp" />
     <ClCompile Include="..\liveMedia\Locale.cpp" />
     <ClCompile Include="..\liveMedia\Media.cpp" />
     <ClCompile Include="..\liveMedia\MediaSession.cpp" />
@@ -389,6 +393,8 @@
     <ClCompile Include="..\liveMedia\SIPClient.cpp" />
     <ClCompile Include="..\liveMedia\StreamParser.cpp" />
     <ClCompile Include="..\liveMedia\uLawAudioFilter.cpp" />
+    <ClCompile Include="..\liveMedia\UnKnowLiveSource.cpp" />
+    <ClCompile Include="..\liveMedia\UnKonwLiveRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\VideoRTPSink.cpp" />
     <ClCompile Include="..\liveMedia\WAVAudioFileServerMediaSubsession.cpp" />
     <ClCompile Include="..\liveMedia\WAVAudioFileSource.cpp" />
@@ -397,7 +403,6 @@
     <ClCompile Include="..\UsageEnvironment\HashTable.cpp" />
     <ClCompile Include="..\UsageEnvironment\strDup.cpp" />
     <ClCompile Include="..\UsageEnvironment\UsageEnvironment.cpp" />
-    <ClCompile Include="live.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
