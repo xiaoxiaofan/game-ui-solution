@@ -716,7 +716,6 @@
     <ClInclude Include="..\liveMedia\include\UnKonwLiveRTPSink.h" />
     <ClInclude Include="..\liveMedia\our_md5.h" />
     <ClInclude Include="..\liveMedia\rtcp_from_spec.h" />
-    <ClInclude Include="..\live\UnKonwLiveRTPSink.h" />
     <ClInclude Include="Export.h" />
     <ClInclude Include="live.h" />
     <ClInclude Include="stdafx.h" />
