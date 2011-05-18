@@ -42,7 +42,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\baseclasses;$(IncludePath)</IncludePath>
-    <TargetName>Cash_AVDevice</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
+    <OutDir>..\..\bin\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>..\..\obj\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
