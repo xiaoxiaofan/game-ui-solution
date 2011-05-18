@@ -62,7 +62,7 @@ void AVDeviceEnum::GetAudioCount(int& nAudioCount)
 
 	
 	ULONG cFetched;
-	IMoniker *pM;
+	CComPtr<IMoniker> pM;
 
 	while(hr = pEm->Next(1, &pM, &cFetched), hr == S_OK)
 	{
@@ -94,7 +94,7 @@ void AVDeviceEnum::GetVideoCount(int& nVideoCount)
 	}
 	
 	ULONG cFetched;
-	IMoniker *pM;
+	CComPtr<IMoniker> pM;
 
 	while(hr = pEm->Next(1, &pM, &cFetched) ,hr == S_OK)
 	{
@@ -127,9 +127,9 @@ void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 	
 	int nCount = 0;
 	ULONG cFetched;
-	IMoniker* pM;
+	CComPtr<IMoniker> pM;
 
-	while(hr = pEm->Next(1, &pM, &cFetched),hr == S_OK)
+	while(hr = pEm->Next(1, &pM, &cFetched),SUCCEEDED(hr))
 	{
 		if (nCount == nDevID)
 		{
@@ -179,9 +179,9 @@ void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 	
 	int nCount = 0;
 	ULONG cFetched;
-	IMoniker* pM;
+	CComPtr<IMoniker> pM;
 	
-	while(hr = pEm->Next(1, &pM, &cFetched), hr == S_OK)
+	while(hr = pEm->Next(1, &pM, &cFetched), SUCCEEDED(hr))
 	{
 		if (nCount == nDevID)
 		{
