@@ -2,37 +2,34 @@
 //
 
 #include "stdafx.h"
-#include "AVDevice.h"
+#include "AVDeviceEnum.h"
 
 
 // 这是已导出类的构造函数。
 // 有关类定义的信息，请参阅 AVDevice.h
 
-CAVDeviceEnum::CAVDeviceEnum(void)
+AVDeviceEnum::CAVDeviceEnum(void)
 {
 	Initalize();
 }
 
-CAVDeviceEnum::~CAVDeviceEnum(void)
+AVDeviceEnum::~CAVDeviceEnum(void)
 {
 	Release();
 }
 
-bool CAVDeviceEnum::Initalize(void)
+bool AVDeviceEnum::Initalize(void)
 {
-
-	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
-
 	return true;
 }
 
 
-void CAVDeviceEnum::Release( void )
+void AVDeviceEnum::Release( void )
 {
-	CoUninitialize();
+	
 }
 
-void CAVDeviceEnum::GetAVCount(int& count)
+void AVDeviceEnum::GetAVCount(int& count)
 {
 	int audioCount = 0,videoCount = 0;
 	GetAudioCount(audioCount);
@@ -41,7 +38,7 @@ void CAVDeviceEnum::GetAVCount(int& count)
 	return;
 }
 
-void CAVDeviceEnum::GetAudioCount(int& nAudioCount)
+void AVDeviceEnum::GetAudioCount(int& nAudioCount)
 {
 	HRESULT hr = S_OK;
 
@@ -74,7 +71,7 @@ void CAVDeviceEnum::GetAudioCount(int& nAudioCount)
 	return;
 }
 
-void CAVDeviceEnum::GetVideoCount(int& nVideoCount)
+void AVDeviceEnum::GetVideoCount(int& nVideoCount)
 {
 	HRESULT hr = S_OK;
 
@@ -106,7 +103,7 @@ void CAVDeviceEnum::GetVideoCount(int& nVideoCount)
 	return;
 }
 
-void CAVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
+void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 {
     HRESULT hr = S_OK;
 
@@ -158,7 +155,7 @@ void CAVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 	return;
 }
 
-void CAVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
+void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 {
 	HRESULT hr = S_OK;
 	CComPtr<ICreateDevEnum> pCreateDevEnum;

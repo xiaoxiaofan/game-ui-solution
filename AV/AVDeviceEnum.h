@@ -11,11 +11,11 @@
 #include "..\include\singleton.hpp"
 #include "Export.h"
 
-class AVDEVICE_API CAVDeviceEnum : public SGT::Singleton<CAVDeviceEnum>
+class AVDEVICE_API AVDeviceEnum : public SGT::Singleton<AVDeviceEnum>
 {
 public:
-	CAVDeviceEnum(void);
-	~CAVDeviceEnum(void);
+	AVDeviceEnum(void);
+	~AVDeviceEnum(void);
 
 	bool Initalize(void);
 	void Release(void);
