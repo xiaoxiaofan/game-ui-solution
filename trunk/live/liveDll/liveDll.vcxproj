@@ -39,8 +39,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>F:\woke\lib;$(LibraryPath)</LibraryPath>
-    <OutDir>..\..\bin\$(Configuration)\$(ProjectName)</OutDir>
+    <LibraryPath>..\..\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\bin\$(Configuration)</OutDir>
+    <IntDir>..\..\obj\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,13 +53,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIVE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>F:\woke\include;..\mediaServer;F:\OpenCV2.2\3rdparty\include;F:\OpenCV2.2\3rdparty\include\ffmpeg_;F:\OpenCV2.2\include\opencv;F:\OpenCV2.2\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\mediaServer;..\..\include\opencv2\3rdparty\include;..\..\include\opencv2\3rdparty\include\ffmpeg_;..\..\include\opencv2\include\opencv;..\..\include\opencv2\include;..\UsageEnvironment\include;..\BasicUsageEnvironment\include;..\groupsock\include;..\liveMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>F:\woke\HPAVMedia\bin\Debug\liveDll.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>..\..\lib\$(Configuration)\$(ProjectName)\$(ProjectName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
