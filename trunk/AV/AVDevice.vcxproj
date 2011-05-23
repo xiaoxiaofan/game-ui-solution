@@ -41,10 +41,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\baseclasses;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\baseclasses;C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\common;$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)</TargetName>
-    <OutDir>..\..\bin\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>..\..\obj\$(Configuration)\$(ProjectName)</IntDir>
+    <OutDir>..\bin\$(Configuration)\</OutDir>
+    <IntDir>..\obj\$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,13 +54,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;AVDEVICE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\woke\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Strmbasd.lib;winmm.lib;Msacm32.lib;Atl.lib;Strmiids.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ImportLibrary>D:\workspace\google code\live\lib\Cash_AVDevice.lib</ImportLibrary>
+      <ImportLibrary>..\lib\$(Configuration)\$(ProjectName)\$(ProjectName).lib</ImportLibrary>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -84,9 +85,6 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\singleton.hpp" />
-    <ClInclude Include="..\include\threads.hpp" />
-    <ClInclude Include="..\include\typetraits.hpp" />
     <ClInclude Include="AVDefine.h" />
     <ClInclude Include="AVDeviceEnum.h" />
     <ClInclude Include="exec.h" />

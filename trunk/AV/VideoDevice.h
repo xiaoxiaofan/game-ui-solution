@@ -1,5 +1,9 @@
 #pragma once
+#include "Export.h"
 #include "streams.h"
+#include "dshowutil.h"
+#include "smartptr.h"
+#include "qedit.h"
 
 
 typedef struct _VideoAttr{
@@ -7,28 +11,38 @@ typedef struct _VideoAttr{
 
 }VideoAttr,*PVideoAttr;
 
-class VideoDevice
+class AVDEVICE_API CVideoDevice
 {
 public:
-	VideoDevice(void);
-	~VideoDevice(void);
+	CVideoDevice(void);
+	~CVideoDevice(void);
 
-	 bool OpenVideo(int devID,VideoAttr& videoAttr);
-	 bool BindFilter(int devID, IBaseFilter **pFilter);
+	 void OpenCamera(int devID);
+	 bool SetPosition(HWND hwnd,int x, int y, int cx, int cy);
+	 void Start();
+	 bool OpenFile();
 
 private:
-	CComPtr<IGraphBuilder>              m_pGraph;
-	CComPtr<IBaseFilter>                m_pSampleGrabberFilter;
-	CComPtr<ISampleGrabber>             m_pSampleGrabber;
-	CComPtr<IMediaControl>              m_pMediaControl;
-	CComPtr<IMediaEvent>                m_pMediaEvent;
-	CComPtr<IBaseFilter>                m_pDeviceFilter;
+	 HRESULT BindFilter(int devID, IBaseFilter **pFilter);
 
-	CComPtr<IPin>                       m_pGrabberInput;
-	CComPtr<IPin>                       m_pGrabberOutput;
-	CComPtr<IPin>                       m_pCameraOutput;
-	CComPtr<IBaseFilter>                m_pNullFilter;
-	CComPtr<IPin>                       m_pNullInputPin;
+private:
+	SmartPtr<IGraphBuilder>              m_pGraph;
+	SmartPtr<IBaseFilter>                m_pSampleGrabberFilter;
+	SmartPtr<ISampleGrabber>             m_pSampleGrabber;
+	SmartPtr<IMediaControl>              m_pMediaControl;
+	SmartPtr<IMediaEvent>                m_pMediaEvent;
+	SmartPtr<IBaseFilter>                m_pDeviceFilter;
+	SmartPtr<IBaseFilter>                m_pVideoRender;
+	SmartPtr<IVideoWindow>               m_pVideoWindow;
+	SmartPtr<IBaseFilter>                m_pVideoSource;
+	SmartPtr<ICaptureGraphBuilder2>      m_pCaputer;
+
+	SmartPtr<IPin>                       m_pGrabberInput;
+	SmartPtr<IPin>                       m_pGrabberOutput;
+	SmartPtr<IPin>                       m_pCameraOutput;
+	SmartPtr<IPin>                       m_pVideoRenderInput;
+	SmartPtr<IBaseFilter>                m_pNullFilter;
+	SmartPtr<IPin>                       m_pNullInputPin;
 
 };
 

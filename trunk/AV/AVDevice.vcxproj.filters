@@ -24,15 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\singleton.hpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\typetraits.hpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\threads.hpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="exec.h">
       <Filter>头文件</Filter>
     </ClInclude>
