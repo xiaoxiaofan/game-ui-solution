@@ -8,14 +8,20 @@
 
 #include <streams.h>
 #include <atlbase.h>
-#include "..\include\singleton.hpp"
+#include "singleton.hpp"
 #include "Export.h"
+#include <vector>
+#include <string>
 
-class AVDEVICE_API AVDeviceEnum : public SGT::Singleton<AVDeviceEnum>
+
+
+typedef std::vector<TCHAR *> AudioList,VideoList;
+
+class AVDEVICE_API CAVDeviceEnum : public SGT::Singleton<CAVDeviceEnum>
 {
 public:
-	AVDeviceEnum(void);
-	~AVDeviceEnum(void);
+	CAVDeviceEnum(void);
+	~CAVDeviceEnum(void);
 
 	bool Initalize(void);
 	void Release(void);
@@ -27,6 +33,9 @@ public:
 	
     void GetAudioName(int nDevID,char * sName,int nBufferSize);
     void GetVideoName(int nDevID,char * sName,int nBufferSize);
+
+	void GetAudioList(AudioList* audioList);
+	void GetVideoList(VideoList* videoList);
 };
 
 

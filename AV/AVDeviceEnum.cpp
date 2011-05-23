@@ -3,33 +3,35 @@
 
 #include "stdafx.h"
 #include "AVDeviceEnum.h"
+#include "smartptr.h"
+#include "strsafe.h"
 
 
 // 这是已导出类的构造函数。
 // 有关类定义的信息，请参阅 AVDevice.h
 
-AVDeviceEnum::CAVDeviceEnum(void)
+CAVDeviceEnum::CAVDeviceEnum(void)
 {
 	Initalize();
 }
 
-AVDeviceEnum::~CAVDeviceEnum(void)
+CAVDeviceEnum::~CAVDeviceEnum(void)
 {
 	Release();
 }
 
-bool AVDeviceEnum::Initalize(void)
+bool CAVDeviceEnum::Initalize(void)
 {
 	return true;
 }
 
 
-void AVDeviceEnum::Release( void )
+void CAVDeviceEnum::Release( void )
 {
 	
 }
 
-void AVDeviceEnum::GetAVCount(int& count)
+void CAVDeviceEnum::GetAVCount(int& count)
 {
 	int audioCount = 0,videoCount = 0;
 	GetAudioCount(audioCount);
@@ -38,11 +40,11 @@ void AVDeviceEnum::GetAVCount(int& count)
 	return;
 }
 
-void AVDeviceEnum::GetAudioCount(int& nAudioCount)
+void CAVDeviceEnum::GetAudioCount(int& nAudioCount)
 {
 	HRESULT hr = S_OK;
 
-	CComPtr<ICreateDevEnum> pCreateDevEnum;
+	SmartPtr<ICreateDevEnum> pCreateDevEnum;
 	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 		IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
@@ -51,7 +53,7 @@ void AVDeviceEnum::GetAudioCount(int& nAudioCount)
 		ErrMsg(TEXT("设备读取失败！"));
 	}
 
-	CComPtr<IEnumMoniker> pEm;
+	SmartPtr<IEnumMoniker> pEm;
 	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_AudioInputDeviceCategory,
 		&pEm, 0);
 
@@ -62,7 +64,7 @@ void AVDeviceEnum::GetAudioCount(int& nAudioCount)
 
 	
 	ULONG cFetched;
-	CComPtr<IMoniker> pM;
+	SmartPtr<IMoniker> pM;
 
 	while(hr = pEm->Next(1, &pM, &cFetched), hr == S_OK)
 	{
@@ -71,11 +73,11 @@ void AVDeviceEnum::GetAudioCount(int& nAudioCount)
 	return;
 }
 
-void AVDeviceEnum::GetVideoCount(int& nVideoCount)
+void CAVDeviceEnum::GetVideoCount(int& nVideoCount)
 {
 	HRESULT hr = S_OK;
 
-	CComPtr<ICreateDevEnum> pCreateDevEnum;
+	SmartPtr<ICreateDevEnum> pCreateDevEnum;
 	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 		IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
@@ -84,7 +86,7 @@ void AVDeviceEnum::GetVideoCount(int& nVideoCount)
 		ErrMsg(TEXT("设备读取失败！"));
 	}
 
-	CComPtr<IEnumMoniker> pEm;
+	SmartPtr<IEnumMoniker> pEm;
 	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
 		&pEm, 0);
 
@@ -94,7 +96,7 @@ void AVDeviceEnum::GetVideoCount(int& nVideoCount)
 	}
 	
 	ULONG cFetched;
-	CComPtr<IMoniker> pM;
+	SmartPtr<IMoniker> pM;
 
 	while(hr = pEm->Next(1, &pM, &cFetched) ,hr == S_OK)
 	{
@@ -103,11 +105,11 @@ void AVDeviceEnum::GetVideoCount(int& nVideoCount)
 	return;
 }
 
-void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
+void CAVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 {
     HRESULT hr = S_OK;
 
-	CComPtr<ICreateDevEnum> pCreateDevEnum;
+	SmartPtr<ICreateDevEnum> pCreateDevEnum;
 	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 		IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
@@ -116,7 +118,7 @@ void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 		ErrMsg(TEXT("设备读取失败！"));
 	}
 
-	CComPtr<IEnumMoniker> pEm;
+	SmartPtr<IEnumMoniker> pEm;
 	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_AudioInputDeviceCategory,
 		&pEm, 0);
 
@@ -127,13 +129,13 @@ void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 	
 	int nCount = 0;
 	ULONG cFetched;
-	CComPtr<IMoniker> pM;
+	SmartPtr<IMoniker> pM;
 
 	while(hr = pEm->Next(1, &pM, &cFetched),SUCCEEDED(hr))
 	{
 		if (nCount == nDevID)
 		{
-			CComPtr<IPropertyBag> pBag;
+			SmartPtr<IPropertyBag> pBag;
 			hr = pM->BindToStorage(0, 0, IID_IPropertyBag, (void **)&pBag);
 			if(SUCCEEDED(hr))
 			{
@@ -155,10 +157,10 @@ void AVDeviceEnum::GetAudioName( int nDevID,char * sName,int nBufferSize )
 	return;
 }
 
-void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
+void CAVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 {
 	HRESULT hr = S_OK;
-	CComPtr<ICreateDevEnum> pCreateDevEnum;
+	SmartPtr<ICreateDevEnum> pCreateDevEnum;
 	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
 		IID_ICreateDevEnum, (void**)&pCreateDevEnum);
 
@@ -167,7 +169,7 @@ void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 		ErrMsg(TEXT("设备读取失败！"));
 	}
 
-	CComPtr<IEnumMoniker> pEm;
+	SmartPtr<IEnumMoniker> pEm;
 	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
 		&pEm, 0);
 
@@ -179,13 +181,13 @@ void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 	
 	int nCount = 0;
 	ULONG cFetched;
-	CComPtr<IMoniker> pM;
+	SmartPtr<IMoniker> pM;
 	
 	while(hr = pEm->Next(1, &pM, &cFetched), SUCCEEDED(hr))
 	{
 		if (nCount == nDevID)
 		{
-			CComPtr<IPropertyBag> pBag;
+			SmartPtr<IPropertyBag> pBag;
 			HRESULT hr = S_OK;
 			hr = pM->BindToStorage(0, 0, IID_IPropertyBag, (void **)&pBag);
 			if(SUCCEEDED(hr))
@@ -204,6 +206,65 @@ void AVDeviceEnum::GetVideoName( int nDevID,char * sName,int nBufferSize )
 			break;
 		}
 		nCount++;
+	}
+	return;
+}
+
+void CAVDeviceEnum::GetAudioList( AudioList * audioList )
+{
+	HRESULT hr = S_OK;
+	SmartPtr<ICreateDevEnum> pCreateDevEnum;
+	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER,
+		IID_ICreateDevEnum, (void**)&pCreateDevEnum);
+
+	if (FAILED(hr))
+	{
+		ErrMsg(TEXT("设备读取失败！"));
+	}
+
+	SmartPtr<IEnumMoniker> pEm;
+	hr = pCreateDevEnum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+		&pEm, 0);
+
+	if (FAILED(hr))
+	{
+		ErrMsg(TEXT("设备读取失败！"));
+	}
+
+	ULONG cFetched;
+	SmartPtr<IMoniker> pM;
+
+	while(hr = pEm->Next(1, &pM, &cFetched), SUCCEEDED(hr))
+	{
+		
+			SmartPtr<IPropertyBag> pBag;
+			HRESULT hr = S_OK;
+			hr = pM->BindToStorage(0, 0, IID_IPropertyBag, (void **)&pBag);
+			if(SUCCEEDED(hr))
+			{
+				VARIANT var;
+				var.vt = VT_BSTR;
+				hr = pBag->Read(L"FriendlyName", &var, NULL);
+				if(SUCCEEDED(hr))
+				{
+					//获取设备名称			
+					//WideCharToMultiByte(CP_ACP,0,var.bstrVal,-1,sName, nBufferSize ,"",NULL);
+					
+					
+                    UINT len = SysStringLen(var.bstrVal);
+                    TCHAR *devName = new TCHAR[len];
+                    _tcscpy(devName,(TCHAR *)var.pbstrVal);
+
+                /*
+					    UINT len = SysStringLen(var.bstrVal);
+										WCHAR  *devName = new WCHAR[len];
+										_tcscpy(devName,(WCHAR *)var.pbstrVal);*/
+					audioList->insert(audioList->end(),devName);
+
+					SysFreeString(var.bstrVal);				
+				}
+			}
+
 	}
 	return;
 }

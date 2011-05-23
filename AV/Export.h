@@ -2,6 +2,8 @@
 
 #ifdef AVDEVICE_EXPORTS
 #define AVDEVICE_API __declspec(dllexport)
-#else
+#elif  AVDEVICE_DLL
 #define AVDEVICE_API __declspec(dllimport)
+#else
+#define AVDEVICE_API
 #endif
