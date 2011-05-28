@@ -45,6 +45,8 @@
     <TargetName>$(ProjectName)</TargetName>
     <OutDir>..\bin\$(Configuration)\</OutDir>
     <IntDir>..\obj\$(Configuration)\$(ProjectName)</IntDir>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>..\lib;..\lib\Debug\liveDll;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -55,7 +57,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;AVDEVICE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\woke\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\woke\include;C:\OpenCV2.2\3rdparty\include;C:\OpenCV2.2\3rdparty\include\ffmpeg_;C:\OpenCV2.2\include\opencv;C:\OpenCV2.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
