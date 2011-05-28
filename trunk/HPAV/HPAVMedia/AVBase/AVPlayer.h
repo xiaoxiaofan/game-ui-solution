@@ -36,3 +36,4 @@ private:
 	HWND							m_Hwnd;
 	bool							m_bRecvVideo;
 };
+

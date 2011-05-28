@@ -123,7 +123,7 @@ public:
 	virtual void OnIMXEC_PlayChanCallbackAudioSamples(const short*pSamples,int nSamples,int nSampleRate,int nTimestamp){};
 	//视频数据回调函数
 	//nKeyFrame,0:非关键帧 1:关键帧
-	virtual void OnIMXEC_PlayChanCallbackVidChanData(unsigned char*pData,int nLen,int nKeyFrame,int& nFlagDontDecode){};
+	virtual void OnIMXEC_PlayChanCallbackVidChanData(unsigned char*pData,int nLen,int nKeyFrame,int& nFlagDontDecode);
 
 	virtual void OnIMXEC_PlayChanCallbackRemoteSnapJPG(const char*cszPathName){};
 };

@@ -7,6 +7,7 @@
 #include "AVBase\AVCapture.h"
 #include "AVBase\AVPlayer.h"
 #include "AVBase\CamerCapture.h"
+#include "VideoDevice.h"
 
 
 // CChildView ´°¿Ú
@@ -23,6 +24,7 @@ public:
 	CAVPlayer*				m_pAVPalyer;
 	CAVCapture*             m_avCap;
 	unsigned long           theadHandle;
+	CVideoDevice*           videoDev;
 // ²Ù×÷
 public:
 
@@ -42,5 +44,8 @@ public:
 	afx_msg void OnCapture();
 	afx_msg void OnRecord();
 	afx_msg void OnCompose();
+	afx_msg void OnPre();
+	afx_msg void OnCaptu();
+	afx_msg void OnMyreco();
 };
 
