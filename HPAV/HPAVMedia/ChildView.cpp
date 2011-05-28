@@ -10,6 +10,9 @@
 #include "AVBase/MediaCapture.h"
 #include <process.h>
 #include "live.h"
+#include "AVDeviceEnum.h"
+#include "VideoDevice.h"
+
 
 
 #ifdef _DEBUG
@@ -21,13 +24,18 @@
 
 CChildView::CChildView()
 {
-
+	
 }
 
 CChildView::~CChildView()
 {
 	
-	
+	if (videoDev)
+	{
+		videoDev->Stop();
+		delete videoDev;
+		videoDev = NULL;
+	}
 	if (m_pCamCaptrue)
 	{
 		m_pCamCaptrue->StopRecord();
@@ -53,6 +61,9 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_COMMAND(ID_CAPTURE, &CChildView::OnCapture)
 	ON_COMMAND(ID_RECORD, &CChildView::OnRecord)
 	ON_COMMAND(ID_COMPOSE, &CChildView::OnCompose)
+	ON_COMMAND(ID_PRE, &CChildView::OnPre)
+	ON_COMMAND(ID_CAPTU, &CChildView::OnCaptu)
+	ON_COMMAND(ID_MYRECO, &CChildView::OnMyreco)
 END_MESSAGE_MAP()
 
 
@@ -91,7 +102,7 @@ void CChildView::OnCapture()
 
 
 	VIDEC_SetScreenPos(0,440,250,400,300);
-	VIDEC_SetScreenWndCount(0,2);                    //设置合成的视频位置
+	VIDEC_SetScreenWndCount(0,1);                    //设置合成的视频位置
 	VIDEC_SetScreenWndPos(0,0,0,0,200,300);
 	VIDEC_SetScreenWndPos(0,1,200,0,200,300);
 
@@ -110,8 +121,8 @@ void CChildView::OnCapture()
 	videoSet.nBitrateControlType = 0;
 	videoSet.nFrameRate = 30;
 	videoSet.nResolution = 5;
-	videoSet.nVideoCodec = 2;
-	videoSet.nVideoDev = 0;
+	videoSet.nVideoCodec = 3;
+	videoSet.nVideoDev = 2;
 	m_pCamCaptrue->OpenVideo(&videoSet);         //打开摄像头
 	/*
 	int i = -1;
@@ -175,4 +186,35 @@ void CChildView::OnRecord()
 void CChildView::OnCompose()
 {
     m_avCap->StartRecordToAVI("C:\\comp.avi",1);
+}
+
+
+void CChildView::OnPre()
+{
+	VideoProcessAdapter *videoProcess = new VideoProcessAdapter();
+	
+	videoDev = new CVideoDevice(videoProcess);
+	
+	videoDev->OpenCamera(2);
+	videoDev->SetPosition(GetSafeHwnd(),20,20,640,480);
+	videoDev->Start();
+
+//	videoDev->SetBroadCast(true);
+	//videoDev->OpenFile();
+
+	//CCaptureVideo* cam = new CCaptureVideo();
+	//cam->Init(2,GetSafeHwnd());
+}
+
+
+void CChildView::OnCaptu()
+{
+	videoDev->QueryFrame();
+}
+
+
+void CChildView::OnMyreco()
+{
+	videoDev->StartRecord();
+	videoDev->SetBroadCast(true);
 }

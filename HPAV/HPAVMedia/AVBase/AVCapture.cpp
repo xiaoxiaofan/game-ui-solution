@@ -439,8 +439,13 @@ CCapChanPlayHandle::~CCapChanPlayHandle()
 void CCapChanPlayHandle::OnIMXEC_CapChanCallbackVideoData( unsigned char*pData,int nLen,int nKeyFrame )
 {
 	//m_pClientSocket->Send(pData,nLen);
-	//m_player.PlayVideoData(pData,nLen);
+	m_player.PlayVideoData(pData,nLen);
 	SetLiveData(pData,nLen);
 }
 
 
+
+void CPlayChanEmptyHandle::OnIMXEC_PlayChanCallbackVidChanData( unsigned char*pData,int nLen,int nKeyFrame,int& nFlagDontDecode )
+{
+	SetLiveData(pData,nLen);
+}

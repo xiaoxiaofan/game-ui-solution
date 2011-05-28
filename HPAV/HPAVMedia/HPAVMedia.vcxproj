@@ -41,9 +41,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../obj/$(Configuration)/$(ProjectName)</OutDir>
-    <IntDir>../obj/$(Configuration)/$(ProjectName)</IntDir>
-    <LibraryPath>F:\woke\bin\Debug\liveDll;$(LibraryPath)</LibraryPath>
+    <OutDir>..\..\bin\$(Configuration)</OutDir>
+    <IntDir>..\..\obj\$(Configuration)\$(ProjectName)</IntDir>
+    <LibraryPath>..\..\lib\Debug\liveDll;..\..\lib\Debug\HPAV;..\..\lib\Debug\AV;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,12 +54,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>F:\woke\include;F:\woke\live\liveDll;F:\woke\HPAVMedia\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenCV2.2\3rdparty\include;C:\OpenCV2.2\3rdparty\include\ffmpeg_;C:\OpenCV2.2\include\opencv;C:\OpenCV2.2\include;C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\common;C:\Program Files\Microsoft SDKs\Windows\v7.1\Samples\multimedia\directshow\baseclasses;..\..\AV;..\..\include;..\..\include\HPAV;..\..\live\liveDll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>../bin/$(Configuration)/$(ProjectName).exe</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>Strmbasd.lib;winmm.lib;Msacm32.lib;Atl.lib;Strmiids.lib;</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -111,6 +112,7 @@
     <ClInclude Include="AVBase\AVRecord.h" />
     <ClInclude Include="AVBase\CamerCapture.h" />
     <ClInclude Include="AVBase\MediaCapture.h" />
+    <ClInclude Include="CaptureVideo.h" />
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="ClientSocket.h" />
     <ClInclude Include="HPAVMedia.h" />
@@ -125,6 +127,7 @@
     <ClCompile Include="AVBase\AVRecord.cpp" />
     <ClCompile Include="AVBase\CamerCapture.cpp" />
     <ClCompile Include="AVBase\MediaCapture.cpp" />
+    <ClCompile Include="CaptureVideo.cpp" />
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="ClientSocket.cpp" />
     <ClCompile Include="HPAVMedia.cpp" />

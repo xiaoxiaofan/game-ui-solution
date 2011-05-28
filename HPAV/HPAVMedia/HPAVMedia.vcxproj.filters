@@ -69,6 +69,9 @@
     <ClInclude Include="ClientSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CaptureVideo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HPAVMedia.cpp">
@@ -99,6 +102,9 @@
       <Filter>AVBase</Filter>
     </ClCompile>
     <ClCompile Include="ClientSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureVideo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
