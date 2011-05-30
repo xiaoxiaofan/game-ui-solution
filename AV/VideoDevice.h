@@ -58,9 +58,11 @@ public:
 	 void SetBroadCast(bool isBroadCast);
 	 void SetBuffer(bool isBuffer);
 	 void StartRecord();
+	 void OpenMutil();
 
 private:
 	 HRESULT BindFilter(int devID, IBaseFilter **pFilter);
+	 BSTR GetMoviePath();
 
 private:
 	SmartPtr<IGraphBuilder>              m_pGraph;
@@ -74,6 +76,7 @@ private:
 	SmartPtr<IBaseFilter>                m_pVideoSource;
 	SmartPtr<ICaptureGraphBuilder2>      m_pCaputer;
 	SmartPtr<IAMStreamConfig>            m_pVideoConfig;
+	SmartPtr<IBaseFilter>                m_pVRM;
 
 	SmartPtr<IPin>                       m_pGrabberInput;
 	SmartPtr<IPin>                       m_pGrabberOutput;
