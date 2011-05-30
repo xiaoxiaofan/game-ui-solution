@@ -6,15 +6,18 @@
 #pragma once
 
 #include "targetver.h"
+#include <Windows.h>
 
-#define WIN32_LEAN_AND_MEAN             //  从 Windows 头文件中排除极少使用的信息
-// Windows 头文件:
-#include <windows.h>
+#define __D3DRM_H__
 
+
+#include <streams.h>
+#include <d3d9.h>
+#include <vmr9.h>
 
 #include <assert.h>
 #include "exec.h"
-
+#include "AVDefine.h"
 
 
 #pragma comment(lib,"opencv_imgproc220d.lib")

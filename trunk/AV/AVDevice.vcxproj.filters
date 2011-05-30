@@ -42,6 +42,12 @@
     <ClInclude Include="AVDefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MultiAllocotar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -57,6 +63,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="VideoDevice.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiAllocotar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

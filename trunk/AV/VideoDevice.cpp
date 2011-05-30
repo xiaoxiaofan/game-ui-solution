@@ -251,3 +251,136 @@ void CVideoDevice::SetBuffer( bool isBuffer )
 		SaveGraphFile(m_pGraph,L"C:\\SetBuffer.grf");
 	}
 }
+
+void CVideoDevice::OpenMutil()
+{
+	SmartPtr<IVMRFilterConfig9> filterConfig;
+
+	BSTR path = GetMoviePath();
+	if( ! path )
+	{
+		return E_FAIL;
+	}
+
+	HRESULT hr;
+
+	hr = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_IGraphBuilder, (void**)&m_pGraph);
+
+	if (SUCCEEDED(hr))
+	{
+		hr = CoCreateInstance(CLSID_VideoMixingRenderer9, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**)&m_pVRM);
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pVRM->QueryInterface(IID_IVMRFilterConfig9, reinterpret_cast<void**>(&filterConfig));
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = filterConfig->SetRenderingMode( VMR9Mode_Renderless );
+
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = filterConfig->SetNumberOfStreams(2);
+
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = SetAllocatorPresenter( m_pVRM, window );
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pGraph->AddFilter(m_pVRM, L"Video Mixing Renderer 9");
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = g_graph->QueryInterface(IID_IMediaControl, reinterpret_cast<void**>(&m_pMediaControl));
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = g_graph->RenderFile( path, NULL );
+	}
+
+	if (SUCCEEDED(hr))
+	{
+		hr = m_pMediaControl->Run();
+	}
+
+	SysFreeString(path);
+
+	return hr;
+}
+
+
+BSTR CVideoDevice::GetMoviePath()
+{
+	OPENFILENAME ofn;
+	ZeroMemory(&ofn, sizeof(ofn));
+	TCHAR  szBuffer[MAX_PATH];
+	szBuffer[0] = NULL;
+
+	static const TCHAR szFilter[]  
+	= TEXT("Video Files (.ASF, .AVI, .MPG, .MPEG, .VOB, .QT, .WMV)\0*.ASF;*.AVI;*.MPG;*.MPEG;*.VOB;*.QT;*.WMV\0") \
+		TEXT("All Files (*.*)\0*.*\0\0");
+	ofn.lStructSize         = sizeof(OPENFILENAME);
+	ofn.hwndOwner           = g_hWnd;
+	ofn.hInstance           = NULL;
+	ofn.lpstrFilter         = szFilter;
+	ofn.nFilterIndex        = 1;
+	ofn.lpstrCustomFilter   = NULL;
+	ofn.nMaxCustFilter      = 0;
+	ofn.lpstrFile           = szBuffer;
+	ofn.nMaxFile            = MAX_PATH;
+	ofn.lpstrFileTitle      = NULL;
+	ofn.nMaxFileTitle       = 0;
+	ofn.lpstrInitialDir     = NULL;
+	ofn.lpstrTitle          = TEXT("Select a video file to play...");
+	ofn.Flags               = OFN_HIDEREADONLY;
+	ofn.nFileOffset         = 0;
+	ofn.nFileExtension      = 0;
+	ofn.lpstrDefExt         = TEXT("AVI");
+	ofn.lCustData           = 0L;
+	ofn.lpfnHook            = NULL;
+	ofn.lpTemplateName  = NULL; 
+
+	if (GetOpenFileName (&ofn))  // user specified a file
+	{
+		return SysAllocString( szBuffer );
+	}
+
+	return NULL;
+}
+
+HRESULT SetAllocatorPresenter( IBaseFilter *filter, HWND window )
+{
+	if( filter == NULL )
+	{
+		return E_FAIL;
+	}
+
+	HRESULT hr;
+
+	SmartPtr<IVMRSurfaceAllocatorNotify9> lpIVMRSurfAllocNotify;
+	FAIL_RET( filter->QueryInterface(IID_IVMRSurfaceAllocatorNotify9, reinterpret_cast<void**>(&lpIVMRSurfAllocNotify)) );
+
+	// create our surface allocator
+	g_allocator.Attach(new CMultiAllocotar( hr, window ));
+	if( FAILED( hr ) )
+	{
+		g_allocator = NULL;
+		return hr;
+	}
+
+	// let the allocator and the notify know about each other
+	FAIL_RET( lpIVMRSurfAllocNotify->AdviseSurfaceAllocator( g_userId, g_allocator ) );
+	FAIL_RET( g_allocator->AdviseNotify(lpIVMRSurfAllocNotify) );
+
+	return hr;
+}
