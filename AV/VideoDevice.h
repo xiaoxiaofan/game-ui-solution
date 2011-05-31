@@ -6,6 +6,9 @@
 #include "qedit.h"
 #include "cxcore.h"
 
+#include <d3d9.h>
+#include <Vmr9.h>
+
 
 typedef struct _VideoAttr{
 
@@ -58,12 +61,10 @@ public:
 	 void SetBroadCast(bool isBroadCast);
 	 void SetBuffer(bool isBuffer);
 	 void StartRecord();
-	 void OpenMutil();
 
 private:
 	 HRESULT BindFilter(int devID, IBaseFilter **pFilter);
-	 BSTR GetMoviePath();
-
+	 
 private:
 	SmartPtr<IGraphBuilder>              m_pGraph;
 	SmartPtr<IBaseFilter>                m_pSampleGrabberFilter;
@@ -77,6 +78,7 @@ private:
 	SmartPtr<ICaptureGraphBuilder2>      m_pCaputer;
 	SmartPtr<IAMStreamConfig>            m_pVideoConfig;
 	SmartPtr<IBaseFilter>                m_pVRM;
+	SmartPtr<IVMRSurfaceAllocator9>      m_pMultiAllocator;
 
 	SmartPtr<IPin>                       m_pGrabberInput;
 	SmartPtr<IPin>                       m_pGrabberOutput;
