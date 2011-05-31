@@ -24,10 +24,24 @@ D3DMATRIX* MatrixLookAtLH(
 
 CMultiScene::CMultiScene(void)
 {
-	m_vertices[0].position = CUSTOMVERTEX::Position(-1.0f,  1.0f, 0.0f); // top left
-	m_vertices[1].position = CUSTOMVERTEX::Position(-1.0f, -1.0f, 0.0f); // bottom left
-	m_vertices[2].position = CUSTOMVERTEX::Position( 1.0f,  1.0f, 0.0f); // top right
-	m_vertices[3].position = CUSTOMVERTEX::Position( 1.0f, -1.0f, 0.0f); // bottom right
+	static int i = 0;
+	if ( i == 0)
+	{
+		m_vertices[0].position = CUSTOMVERTEX::Position(-0.5f,  0.3f, 0.0f); // top left
+		m_vertices[1].position = CUSTOMVERTEX::Position(-0.5f, -1.0f, 0.0f); // bottom left
+		m_vertices[2].position = CUSTOMVERTEX::Position( 0.5f,  0.3f, 0.0f); // top right
+		m_vertices[3].position = CUSTOMVERTEX::Position( 0.5f, -1.0f, 0.0f); // bottom right
+		i++;
+	}else
+	{
+		m_vertices[0].position = CUSTOMVERTEX::Position(-0.5f,  1.0f, 0.0f); // top left
+		m_vertices[1].position = CUSTOMVERTEX::Position(-0.5f, -0.7f, 0.0f); // bottom left
+		m_vertices[2].position = CUSTOMVERTEX::Position( 0.5f,  1.0f, 0.0f); // top right
+		m_vertices[3].position = CUSTOMVERTEX::Position( 0.5f, -0.7f, 0.0f); // bottom right
+	}
+	
+
+	
 
 	// set up diffusion:
 	m_vertices[0].color = 0xffffffff;
@@ -82,24 +96,26 @@ HRESULT CMultiScene::Init(IDirect3DDevice9* d3ddev)
 	D3DSURFACE_DESC backBufferDesc;
 	backBuffer->GetDesc( & backBufferDesc );
 
-	// Set the projection matrix
-	D3DMATRIX matProj;
-	FLOAT fAspect = backBufferDesc.Width / 
-		(float)backBufferDesc.Height;
-	MatrixPerspectiveFovLH( &matProj, (float)0.785398163397448309616, fAspect, 
-		1.0f, 100.0f );
-	FAIL_RET( d3ddev->SetTransform( D3DTS_PROJECTION, &matProj ) );
-
-
-	D3DVECTOR from = { 1.0f, 1.0f, -3.0f };
-	D3DVECTOR at = { 0.0f, 0.0f, 0.0f };
-	D3DVECTOR up = { 0.0f, 1.0f, 0.0f };
-
-	D3DMATRIX matView;
-	MatrixLookAtLH( &matView, & from, & at, & up);
-	FAIL_RET( d3ddev->SetTransform( D3DTS_VIEW, &matView ) );
-
-	m_time = GetTickCount();
+/*
+		// Set the projection matrix
+		D3DMATRIX matProj;
+		FLOAT fAspect = backBufferDesc.Width / 
+			(float)backBufferDesc.Height;
+		MatrixPerspectiveFovLH( &matProj, (float)0.785398163397448309616, fAspect, 
+			1.0f, 100.0f );
+		FAIL_RET( d3ddev->SetTransform( D3DTS_PROJECTION, &matProj ) );
+	
+	
+		D3DVECTOR from = { 1.0f, 1.0f, -3.0f };
+		D3DVECTOR at = { 0.0f, 0.0f, 0.0f };
+		D3DVECTOR up = { 0.0f, 1.0f, 0.0f };
+	
+		D3DMATRIX matView;
+		MatrixLookAtLH( &matView, & from, & at, & up);
+		FAIL_RET( d3ddev->SetTransform( D3DTS_VIEW, &matView ) );
+	
+		m_time = GetTickCount();*/
+	
 
 	return hr;
 }
@@ -120,7 +136,9 @@ HRESULT CMultiScene::DrawScene( IDirect3DDevice9* d3ddev,
 		return D3DERR_INVALIDCALL;
 	}
 
-	// get the difference in time
+/*
+
+// get the difference in time
 	DWORD dwCurrentTime;
 	dwCurrentTime = GetTickCount();
 	double difference = m_time - dwCurrentTime ;
@@ -131,8 +149,8 @@ HRESULT CMultiScene::DrawScene( IDirect3DDevice9* d3ddev,
 	float z = (float) ( sin(difference / 2000.0 ) ) ;
 
 	// update the two rotating vertices with the new position
-	m_vertices[0].position = CUSTOMVERTEX::Position(x,  y, z);   // top left
-	m_vertices[3].position = CUSTOMVERTEX::Position(-x, -y, -z); // bottom right
+	m_vertices[0].position = CUSTOMVERTEX::Position(1,  -1, 0);   // top left
+	m_vertices[3].position = CUSTOMVERTEX::Position(-1, -1, 0); // bottom right
 
 	// Adjust the color so the blue is always on the bottom.
 	// As the corner approaches the bottom, get rid of all the other
@@ -140,13 +158,15 @@ HRESULT CMultiScene::DrawScene( IDirect3DDevice9* d3ddev,
 	DWORD mask0 = (DWORD) (255 * ( ( y + 1.0  )/ 2.0 ));
 	DWORD mask3 = (DWORD) (255 * ( ( -y + 1.0  )/ 2.0 ));
 	m_vertices[0].color = 0xff0000ff | ( mask0 << 16 ) | ( mask0 << 8 );
-	m_vertices[3].color = 0xff0000ff | ( mask3 << 16 ) | ( mask3 << 8 );
+	m_vertices[3].color = 0xff0000ff | ( mask3 << 16 ) | ( mask3 << 8 );*/
+
 
 	// write the new vertex information into the buffer
 	void* pData;
 	FAIL_RET( m_vertexBuffer->Lock(0,sizeof(pData), &pData,0) );
 	memcpy(pData,m_vertices,sizeof(m_vertices));                            
 	FAIL_RET( m_vertexBuffer->Unlock() );  
+
 
 	// clear the scene so we don't have any articats left
 	d3ddev->Clear( 0L, NULL, D3DCLEAR_TARGET, 

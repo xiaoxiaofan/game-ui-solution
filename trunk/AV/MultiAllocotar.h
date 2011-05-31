@@ -10,8 +10,8 @@ class CMultiAllocotar : public IVMRSurfaceAllocator9,
 {
 
 public:
-	
-	CMultiAllocotar(HRESULT& hr, HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd);
+
+	CMultiAllocotar(HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd);
 	virtual ~CMultiAllocotar(void);
 
 

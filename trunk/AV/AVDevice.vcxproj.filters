@@ -48,6 +48,9 @@
     <ClInclude Include="MultiScene.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="VideoMulti.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -69,6 +72,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MultiScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoMulti.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

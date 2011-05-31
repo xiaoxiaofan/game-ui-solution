@@ -2,36 +2,19 @@
 #include "MultiAllocotar.h"
 
 
-CMultiAllocotar::CMultiAllocotar(HRESULT& hr, HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd)
+CMultiAllocotar::CMultiAllocotar(HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd)
 	: m_refCount(1)
 	, m_D3D(d3d)
 	, m_D3DDev(d3dd)
 	, m_window(wnd)
 {
 	CAutoLock Lock(&m_ObjectLock);
-	hr = E_FAIL;
-
 	if( IsWindow( wnd ) == FALSE )
 	{
-		hr = E_INVALIDARG;
 		return;
 	}
-
-	if( m_D3D == NULL )
-	{
-		//ASSERT( d3dd ==  NULL ); 
-
-		m_D3D.Attach( Direct3DCreate9(D3D_SDK_VERSION) );
-		if (m_D3D == NULL) {
-			hr = E_FAIL;
-			return;
-		}
-	}
-
-	if( m_D3DDev == NULL )
-	{
-		hr = CreateDevice();
-	}
+	m_renderTarget = NULL;
+	m_D3DDev->GetRenderTarget(0,&m_renderTarget);
 }
 
 
@@ -148,12 +131,12 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::AdviseNotify( /* [in] */ IVMRSurfaceA
 {
 	CAutoLock Lock(&m_ObjectLock);
 
-	HRESULT hr;
+	HRESULT hr = S_OK;
 
 	m_lpIVMRSurfAllocNotify = lpIVMRSurfAllocNotify;
 
 	HMONITOR hMonitor = m_D3D->GetAdapterMonitor( D3DADAPTER_DEFAULT );
-	m_lpIVMRSurfAllocNotify->SetD3DDevice( m_D3DDev, hMonitor );
+	hr = m_lpIVMRSurfAllocNotify->SetD3DDevice( m_D3DDev, hMonitor );
 
 	return hr;
 }
@@ -276,6 +259,7 @@ bool CMultiAllocotar::NeedToHandleDisplayChange()
 
 HRESULT CMultiAllocotar::PresentHelper( VMR9PresentationInfo *lpPresInfo )
 {
+	
 	// parameter validation
 	if( lpPresInfo == NULL )
 	{
@@ -290,15 +274,29 @@ HRESULT CMultiAllocotar::PresentHelper( VMR9PresentationInfo *lpPresInfo )
 	HRESULT hr;
 
 	m_D3DDev->SetRenderTarget( 0, m_renderTarget );
+
+	 IDirect3DDevice9*       pSampleDevice       = NULL;
+	 hr = lpPresInfo->lpSurf->GetDevice( &pSampleDevice );
+
 	// if we created a  private texture
 	// blt the decoded image onto the texture.
 	if( m_privateTexture != NULL )
 	{   
+		/*
+			SmartPtr<IDirect3DSurface9> preSurface;
+			
+					m_D3DDev->UpdateSurface(lpPresInfo->lpSurf, 
+						0, 
+						preSurface,
+						0)*/
+			
 		SmartPtr<IDirect3DSurface9> surface;
 		FAIL_RET( m_privateTexture->GetSurfaceLevel( 0 , & surface ) );
 
+
+
 		// copy the full surface onto the texture's surface
-		FAIL_RET( m_D3DDev->StretchRect( lpPresInfo->lpSurf, NULL,
+		FAIL_RET( pSampleDevice->StretchRect( lpPresInfo->lpSurf, NULL,
 			surface, NULL,
 			D3DTEXF_NONE ) );
 
