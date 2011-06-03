@@ -1,5 +1,0 @@
-﻿  toluabind.c
-f:\每天工作\game-ui-solution\cegui-0.7.5\cegui\include\scriptingmodules\luascriptmodule\support\tolua++\tolua++.h(68): fatal error C1083: Cannot open include file: 'lua.h': No such file or directory
-  tolua.c
-f:\每天工作\game-ui-solution\cegui-0.7.5\cegui\include\scriptingmodules\luascriptmodule\support\tolua++\tolua++.h(68): fatal error C1083: Cannot open include file: 'lua.h': No such file or directory
-  Generating Code...
