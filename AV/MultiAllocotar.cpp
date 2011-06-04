@@ -2,19 +2,34 @@
 #include "MultiAllocotar.h"
 
 
-CMultiAllocotar::CMultiAllocotar(HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd)
+CMultiAllocotar::CMultiAllocotar(CMultiScene * scene)
 	: m_refCount(1)
-	, m_D3D(d3d)
-	, m_D3DDev(d3dd)
-	, m_window(wnd)
+	, m_pScene(scene)
 {
-	CAutoLock Lock(&m_ObjectLock);
-	if( IsWindow( wnd ) == FALSE )
-	{
-		return;
-	}
+	
+	d3d = Direct3DCreate9(D3D_SDK_VERSION);
+	
+	HWND hwnd;
+	m_pScene->GetWindow(hwnd);
+	D3DDISPLAYMODE dm;
+    d3d->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &dm);
+	D3DPRESENT_PARAMETERS pp;
+	ZeroMemory(&pp, sizeof(pp));
+	pp.Windowed = TRUE;
+	pp.hDeviceWindow = hwnd;
+	pp.SwapEffect = D3DSWAPEFFECT_COPY;
+	pp.BackBufferFormat = dm.Format;
+
+    d3d->CreateDevice(  D3DADAPTER_DEFAULT,
+		D3DDEVTYPE_HAL,
+		hwnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING | 
+		D3DCREATE_MULTITHREADED,
+		&pp,
+		&device);
 	m_renderTarget = NULL;
-	m_D3DDev->GetRenderTarget(0,&m_renderTarget);
+
+	//device->GetRenderTarget(0,&m_renderTarget);
 }
 
 
@@ -25,6 +40,50 @@ CMultiAllocotar::~CMultiAllocotar(void)
 
 HRESULT STDMETHODCALLTYPE CMultiAllocotar::InitializeDevice( /* [in] */ DWORD_PTR dwUserID, /* [in] */ VMR9AllocationInfo *lpAllocInfo, /* [out][in] */ DWORD *lpNumBuffers )
 {
+	D3DCAPS9 d3dcaps;
+	DWORD dwWidth = 1;
+	DWORD dwHeight = 1;
+	float fTU = 1.f;
+	float fTV = 1.f;
+	
+	if( lpNumBuffers == NULL )
+	{
+		return E_POINTER;
+	}
+	
+	if( m_lpIVMRSurfAllocNotify == NULL )
+	{
+		return E_FAIL;
+	}
+	
+	HRESULT hr = S_OK;
+	SmartPtr<IDirect3DDevice9> pDevice = NULL;
+	m_pScene->Get3DDevice(&pDevice);
+	pDevice->GetDeviceCaps(&d3dcaps);
+	if( d3dcaps.TextureCaps & D3DPTEXTURECAPS_POW2 )
+	{
+		while( dwWidth < lpAllocInfo->dwWidth )
+			dwWidth = dwWidth << 1;
+		while( dwHeight < lpAllocInfo->dwHeight )
+			dwHeight = dwHeight << 1;
+	
+		fTU = (float)(lpAllocInfo->dwWidth) / (float)(dwWidth);
+		fTV = (float)(lpAllocInfo->dwHeight) / (float)(dwHeight);
+			
+		lpAllocInfo->dwWidth = dwWidth;
+		lpAllocInfo->dwHeight = dwHeight;
+	}
+	
+	lpAllocInfo->dwFlags |= VMR9AllocFlag_TextureSurface;
+	
+	DeleteSurfaces();
+	m_surfaces.resize(*lpNumBuffers);
+	
+	hr = m_lpIVMRSurfAllocNotify->AllocateSurfaceHelper(lpAllocInfo, lpNumBuffers, & m_surfaces.at(0) );
+	
+	return hr;
+/*
+
 	D3DCAPS9 d3dcaps;
 	DWORD dwWidth = 1;
 	DWORD dwHeight = 1;
@@ -43,7 +102,7 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::InitializeDevice( /* [in] */ DWORD_PT
 
 	HRESULT hr = S_OK;
 
-	m_D3DDev->GetDeviceCaps( &d3dcaps );
+	device->GetDeviceCaps( &d3dcaps );
 	if( d3dcaps.TextureCaps & D3DPTEXTURECAPS_POW2 )
 	{
 		while( dwWidth < lpAllocInfo->dwWidth )
@@ -53,7 +112,7 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::InitializeDevice( /* [in] */ DWORD_PT
 
 		fTU = (float)(lpAllocInfo->dwWidth) / (float)(dwWidth);
 		fTV = (float)(lpAllocInfo->dwHeight) / (float)(dwHeight);
-		m_scene.SetSrcRect( fTU, fTV );
+		m_sence.SetSrcRect( fTU, fTV );
 		lpAllocInfo->dwWidth = dwWidth;
 		lpAllocInfo->dwHeight = dwHeight;
 	}
@@ -74,31 +133,11 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::InitializeDevice( /* [in] */ DWORD_PT
 	// and copy the decoded images onto it.
 	if(FAILED(hr) && !(lpAllocInfo->dwFlags & VMR9AllocFlag_3DRenderTarget))
 	{
-		DeleteSurfaces();            
-
-		// is surface YUV ?
-		if (lpAllocInfo->Format > '0000') 
-		{           
-			D3DDISPLAYMODE dm; 
-			m_D3DDev->GetDisplayMode(NULL,  & dm );
-
-			// create the private texture
-			m_D3DDev->CreateTexture(lpAllocInfo->dwWidth, lpAllocInfo->dwHeight,
-				1, 
-				D3DUSAGE_RENDERTARGET, 
-				dm.Format, 
-				D3DPOOL_DEFAULT /* default pool - usually video memory */, 
-				& m_privateTexture, NULL );
-		}
-
-
-		lpAllocInfo->dwFlags &= ~VMR9AllocFlag_TextureSurface;
-		lpAllocInfo->dwFlags |= VMR9AllocFlag_OffscreenSurface;
-
-		m_lpIVMRSurfAllocNotify->AllocateSurfaceHelper(lpAllocInfo, lpNumBuffers, & m_surfaces.at(0));
+		DeleteSurfaces();           
 	}
 
-	return m_scene.Init(m_D3DDev);
+	return m_sence.Init(device);*/
+
 }
 
 HRESULT STDMETHODCALLTYPE CMultiAllocotar::TerminateDevice( /* [in] */ DWORD_PTR dwID )
@@ -135,23 +174,52 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::AdviseNotify( /* [in] */ IVMRSurfaceA
 
 	m_lpIVMRSurfAllocNotify = lpIVMRSurfAllocNotify;
 
-	HMONITOR hMonitor = m_D3D->GetAdapterMonitor( D3DADAPTER_DEFAULT );
-	hr = m_lpIVMRSurfAllocNotify->SetD3DDevice( m_D3DDev, hMonitor );
+	SmartPtr<IDirect3DDevice9> pDevice = NULL;
+	SmartPtr<IDirect3D9> p3D = NULL;
+	m_pScene->Get3DDevice(&pDevice);
+	pDevice->GetDirect3D(&p3D);
+	pDevice->GetRenderTarget(0,&m_renderTarget);
+	HMONITOR hMonitor = p3D->GetAdapterMonitor( D3DADAPTER_DEFAULT );
+	hr = m_lpIVMRSurfAllocNotify->SetD3DDevice( pDevice, hMonitor );
 
 	return hr;
+
+	/*
+	CAutoLock Lock(&m_ObjectLock);
+	
+		HRESULT hr;
+	
+		m_lpIVMRSurfAllocNotify = lpIVMRSurfAllocNotify;
+	
+		HMONITOR hMonitor = d3d->GetAdapterMonitor( D3DADAPTER_DEFAULT );
+		FAIL_RET( m_lpIVMRSurfAllocNotify->SetD3DDevice( device, hMonitor ) );
+		return hr;*/
+	
 }
 
 HRESULT STDMETHODCALLTYPE CMultiAllocotar::StartPresenting( /* [in] */ DWORD_PTR dwUserID )
 {
 	CAutoLock Lock(&m_ObjectLock);
-
-	ASSERT( m_D3DDev );
-	if( m_D3DDev == NULL )
+	SmartPtr<IDirect3DDevice9> pDevice = NULL;
+	m_pScene->Get3DDevice(&pDevice);
+	ASSERT( pDevice );
+	if( pDevice == NULL )
 	{
 		return E_FAIL;
 	}
 
-	return S_OK;
+	return S_OK;	
+	/*
+	CAutoLock Lock(&m_ObjectLock);
+	
+		ASSERT( d3d );
+		if( device == NULL )
+		{
+			return E_FAIL;
+		}
+	
+		return S_OK;*/
+	
 }
 
 HRESULT STDMETHODCALLTYPE CMultiAllocotar::StopPresenting( /* [in] */ DWORD_PTR dwUserID )
@@ -163,103 +231,99 @@ HRESULT STDMETHODCALLTYPE CMultiAllocotar::PresentImage( /* [in] */ DWORD_PTR dw
 {
 	HRESULT hr;
 	CAutoLock Lock(&m_ObjectLock);
-
-	// if we are in the middle of the display change
-	if( NeedToHandleDisplayChange() )
+			
+	if( lpPresInfo == NULL )
 	{
-		// NOTE: this piece of code is left as a user exercise.  
-		// The D3DDevice here needs to be switched
-		// to the device that is using another adapter
+		return E_POINTER;
 	}
-
-	hr = PresentHelper( lpPresInfo );
-
-	// IMPORTANT: device can be lost when user changes the resolution
-	// or when (s)he presses Ctrl + Alt + Delete.
-	// We need to restore our video memory after that
-	if( hr == D3DERR_DEVICELOST)
+	else if( lpPresInfo->lpSurf == NULL )
 	{
-		if (m_D3DDev->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) 
-		{
-			DeleteSurfaces();
-			CreateDevice();
-
-			HMONITOR hMonitor = m_D3D->GetAdapterMonitor( D3DADAPTER_DEFAULT );
-
-			m_lpIVMRSurfAllocNotify->ChangeD3DDevice( m_D3DDev, hMonitor ) ;
-
-		}
-
-		hr = S_OK;
+		return E_POINTER;
 	}
-
+			
+	SmartPtr<IDirect3DDevice9> pDevice = NULL;
+	m_pScene->Get3DDevice(&pDevice);
+			
+	IDirect3DDevice9*       pSampleDevice       = NULL;
+	hr = lpPresInfo->lpSurf->GetDevice( &pSampleDevice );
+			
+	pDevice->SetRenderTarget(0,m_renderTarget);
+			
+	SmartPtr<IDirect3DTexture9> texture;
+	FAIL_RET( lpPresInfo->lpSurf->GetContainer( __uuidof(IDirect3DTexture9), (LPVOID*) & texture ) );    
+			
+    m_pScene->SetTexture(texture);
+	m_pScene->DrawScene();
+	//m_sence.DrawScene(device,texture);
 	return hr;
+
+	/*
+	HRESULT hr;
+		CAutoLock Lock(&m_ObjectLock);
+	
+		// if we are in the middle of the display change
+		if( NeedToHandleDisplayChange() )
+		{
+			// NOTE: this piece of code is left as a user exercise.  
+			// The D3DDevice here needs to be switched
+			// to the device that is using another adapter
+		}
+	
+		hr = PresentHelper( lpPresInfo );
+	
+		// IMPORTANT: device can be lost when user changes the resolution
+		// or when (s)he presses Ctrl + Alt + Delete.
+		// We need to restore our video memory after that
+		if( hr == D3DERR_DEVICELOST)
+		{
+			if (device->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) 
+			{
+				DeleteSurfaces();
+				FAIL_RET( CreateDevice() );
+	
+				HMONITOR hMonitor = d3d->GetAdapterMonitor( D3DADAPTER_DEFAULT );
+	
+				FAIL_RET( m_lpIVMRSurfAllocNotify->ChangeD3DDevice( device, hMonitor ) );
+	
+			}
+	
+			hr = S_OK;
+		}
+	
+		return hr;*/
+	
 }
 
 HRESULT CMultiAllocotar::CreateDevice()
 {
 	HRESULT hr;
-	m_D3DDev = NULL;
+	d3d = NULL;
 	D3DDISPLAYMODE dm;
 
-	hr = m_D3D->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &dm);
+	HWND hwnd;
+	m_pScene->GetWindow(hwnd);
+	hr = d3d->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &dm);
 	D3DPRESENT_PARAMETERS pp;
 	ZeroMemory(&pp, sizeof(pp));
 	pp.Windowed = TRUE;
-	pp.hDeviceWindow = m_window;
+	pp.hDeviceWindow = hwnd;
 	pp.SwapEffect = D3DSWAPEFFECT_COPY;
 	pp.BackBufferFormat = dm.Format;
 
-	FAIL_RET( m_D3D->CreateDevice(  D3DADAPTER_DEFAULT,
+	FAIL_RET( d3d->CreateDevice(  D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
-		m_window,
+		hwnd,
 		D3DCREATE_SOFTWARE_VERTEXPROCESSING | 
 		D3DCREATE_MULTITHREADED,
 		&pp,
-		&m_D3DDev) );
+		&device) );
 
 	m_renderTarget = NULL; 
-	return m_D3DDev->GetRenderTarget( 0, & m_renderTarget );
+	return device->GetRenderTarget( 0, & m_renderTarget );
 }
 
-void CMultiAllocotar::DeleteSurfaces()
+HRESULT CMultiAllocotar::PresentHelper(VMR9PresentationInfo *lpPresInfo)
 {
-	CAutoLock Lock(&m_ObjectLock);
-
-	// clear out the private texture
-	m_privateTexture = NULL;
-
-	for( size_t i = 0; i < m_surfaces.size(); ++i ) 
-	{
-		m_surfaces[i] = NULL;
-	}
-}
-
-bool CMultiAllocotar::NeedToHandleDisplayChange()
-{
-	if( ! m_lpIVMRSurfAllocNotify )
-	{
-		return false;
-	}
-
-	D3DDEVICE_CREATION_PARAMETERS Parameters;
-	if( FAILED( m_D3DDev->GetCreationParameters(&Parameters) ) )
-	{
-		ASSERT( false );
-		return false;
-	}
-
-	HMONITOR currentMonitor = m_D3D->GetAdapterMonitor( Parameters.AdapterOrdinal );
-
-	HMONITOR hMonitor = m_D3D->GetAdapterMonitor( D3DADAPTER_DEFAULT );
-
-	return hMonitor != currentMonitor;
-
-}
-
-HRESULT CMultiAllocotar::PresentHelper( VMR9PresentationInfo *lpPresInfo )
-{
-	
 	// parameter validation
 	if( lpPresInfo == NULL )
 	{
@@ -273,45 +337,50 @@ HRESULT CMultiAllocotar::PresentHelper( VMR9PresentationInfo *lpPresInfo )
 	CAutoLock Lock(&m_ObjectLock);
 	HRESULT hr;
 
-	m_D3DDev->SetRenderTarget( 0, m_renderTarget );
+//	device->SetRenderTarget( 0, m_renderTarget );
+	
+	SmartPtr<IDirect3DTexture9> texture;
+	FAIL_RET( lpPresInfo->lpSurf->GetContainer( __uuidof(IDirect3DTexture9), (LPVOID*) & texture ) );    
+	FAIL_RET( m_sence.DrawScene(device, texture ) );
+	
 
-	 IDirect3DDevice9*       pSampleDevice       = NULL;
-	 hr = lpPresInfo->lpSurf->GetDevice( &pSampleDevice );
+	FAIL_RET( device->Present( NULL, NULL, NULL, NULL ) );
 
-	// if we created a  private texture
-	// blt the decoded image onto the texture.
-	if( m_privateTexture != NULL )
-	{   
-		/*
-			SmartPtr<IDirect3DSurface9> preSurface;
-			
-					m_D3DDev->UpdateSurface(lpPresInfo->lpSurf, 
-						0, 
-						preSurface,
-						0)*/
-			
-		SmartPtr<IDirect3DSurface9> surface;
-		FAIL_RET( m_privateTexture->GetSurfaceLevel( 0 , & surface ) );
-
-
-
-		// copy the full surface onto the texture's surface
-		FAIL_RET( pSampleDevice->StretchRect( lpPresInfo->lpSurf, NULL,
-			surface, NULL,
-			D3DTEXF_NONE ) );
-
-		FAIL_RET( m_scene.DrawScene(m_D3DDev, m_privateTexture ) );
-	}
-	else // this is the case where we have got the textures allocated by VMR
-		// all we need to do is to get them from the surface
-	{
-		SmartPtr<IDirect3DTexture9> texture;
-		FAIL_RET( lpPresInfo->lpSurf->GetContainer( __uuidof(IDirect3DTexture9), (LPVOID*) & texture ) );    
-		FAIL_RET( m_scene.DrawScene(m_D3DDev, texture ) );
-	}
-
-	FAIL_RET( m_D3DDev->Present( NULL, NULL, NULL, NULL ) );
 	return hr;
+}
+
+bool CMultiAllocotar::NeedToHandleDisplayChange()
+{
+	if( ! m_lpIVMRSurfAllocNotify )
+	{
+		return false;
+	}
+
+	D3DDEVICE_CREATION_PARAMETERS Parameters;
+	if( FAILED( device->GetCreationParameters(&Parameters) ) )
+	{
+		ASSERT( false );
+		return false;
+	}
+
+	HMONITOR currentMonitor = d3d->GetAdapterMonitor( Parameters.AdapterOrdinal );
+
+	HMONITOR hMonitor = d3d->GetAdapterMonitor( D3DADAPTER_DEFAULT );
+
+	return hMonitor != currentMonitor;
+
+
+}
+
+
+void CMultiAllocotar::DeleteSurfaces()
+{
+	CAutoLock Lock(&m_ObjectLock);
+
+	for( size_t i = 0; i < m_surfaces.size(); ++i ) 
+	{
+		m_surfaces[i] = NULL;
+	}
 }
 
 HRESULT STDMETHODCALLTYPE CMultiAllocotar::QueryInterface( REFIID riid, void** ppvObject )
@@ -356,4 +425,27 @@ ULONG STDMETHODCALLTYPE CMultiAllocotar::Release()
 	}
 
 	return ret;
+}
+
+HRESULT CMultiAllocotar::Attach( IBaseFilter* pVMRFilter,D3DFORMAT format,DWORD_PTR* pdwID )
+{
+	if( pVMRFilter == NULL )
+	{
+		return E_FAIL;
+	}
+
+	HRESULT hr = S_OK;
+
+	SmartPtr<IVMRSurfaceAllocatorNotify9> lpIVMRSurfAllocNotify;
+	FAIL_RET( pVMRFilter->QueryInterface(IID_IVMRSurfaceAllocatorNotify9, reinterpret_cast<void**>(&lpIVMRSurfAllocNotify)) );
+
+	if( FAILED( hr ) )
+	{
+		lpIVMRSurfAllocNotify = NULL;
+		return hr;
+	}
+	*pdwID = (DWORD_PTR)&lpIVMRSurfAllocNotify;
+
+	FAIL_RET( lpIVMRSurfAllocNotify->AdviseSurfaceAllocator( *pdwID,this) );
+	FAIL_RET( AdviseNotify(lpIVMRSurfAllocNotify) );
 }

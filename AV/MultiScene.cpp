@@ -1,47 +1,22 @@
 #include "StdAfx.h"
 #include "MultiScene.h"
 #include <math.h>
+#include <yvals.h>
 
 
 #define D3DFVF_CUSTOMVERTEX ( D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
-// Matrix functions
-D3DMATRIX* MatrixPerspectiveFovLH(
-	D3DMATRIX * pOut,
-	FLOAT fovy,
-	FLOAT Aspect,
-	FLOAT zn,
-	FLOAT zf
-	);
 
-
-D3DMATRIX* MatrixLookAtLH( 
-	D3DMATRIX *pOut, 
-	const D3DVECTOR *pEye, 
-	const D3DVECTOR *pAt,
-	const D3DVECTOR *pUp 
-	);
 
 CMultiScene::CMultiScene(void)
+	: m_pTexture(NULL)
+	, m_pD3Device(NULL)
 {
-	static int i = 0;
-	if ( i == 0)
-	{
-		m_vertices[0].position = CUSTOMVERTEX::Position(-0.5f,  0.3f, 0.0f); // top left
-		m_vertices[1].position = CUSTOMVERTEX::Position(-0.5f, -1.0f, 0.0f); // bottom left
-		m_vertices[2].position = CUSTOMVERTEX::Position( 0.5f,  0.3f, 0.0f); // top right
-		m_vertices[3].position = CUSTOMVERTEX::Position( 0.5f, -1.0f, 0.0f); // bottom right
-		i++;
-	}else
-	{
-		m_vertices[0].position = CUSTOMVERTEX::Position(-0.5f,  1.0f, 0.0f); // top left
-		m_vertices[1].position = CUSTOMVERTEX::Position(-0.5f, -0.7f, 0.0f); // bottom left
-		m_vertices[2].position = CUSTOMVERTEX::Position( 0.5f,  1.0f, 0.0f); // top right
-		m_vertices[3].position = CUSTOMVERTEX::Position( 0.5f, -0.7f, 0.0f); // bottom right
-	}
-	
 
-	
+	m_vertices[0].position = CUSTOMVERTEX::Position(-1.0f,  1.0f, 0.0f); // top left
+	m_vertices[1].position = CUSTOMVERTEX::Position(-1.0f, -1.0f, 0.0f); // bottom left
+	m_vertices[2].position = CUSTOMVERTEX::Position( 1.0f,  1.0f, 0.0f); // top right
+	m_vertices[3].position = CUSTOMVERTEX::Position( 1.0f, -1.0f, 0.0f); // bottom right
 
 	// set up diffusion:
 	m_vertices[0].color = 0xffffffff;
@@ -59,269 +34,136 @@ CMultiScene::CMultiScene(void)
 
 CMultiScene::~CMultiScene(void)
 {
+
 }
 
 
-HRESULT CMultiScene::Init(IDirect3DDevice9* d3ddev)
+HRESULT CMultiScene::DrawScene() 
 {
 	HRESULT hr;
-
-	if( ! d3ddev )
-		return E_POINTER;
-
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_LIGHTING, FALSE));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_ALPHAREF, 0x10));
-	FAIL_RET(hr = d3ddev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER));
-
-	FAIL_RET(hr = d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP));
-	FAIL_RET(hr = d3ddev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP));
-	FAIL_RET(hr = d3ddev->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR));
-	FAIL_RET(hr = d3ddev->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR));
-	FAIL_RET(hr = d3ddev->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR));
-
-	m_vertexBuffer = NULL;
-
-	d3ddev->CreateVertexBuffer(sizeof(m_vertices),D3DUSAGE_WRITEONLY,D3DFVF_CUSTOMVERTEX,D3DPOOL_MANAGED,& m_vertexBuffer, NULL );
-
-	SmartPtr<IDirect3DSurface9> backBuffer;
-	FAIL_RET( d3ddev->GetBackBuffer( 0, 0,
-		D3DBACKBUFFER_TYPE_MONO,
-		& backBuffer ) );
-
-	D3DSURFACE_DESC backBufferDesc;
-	backBuffer->GetDesc( & backBufferDesc );
-
-/*
-		// Set the projection matrix
-		D3DMATRIX matProj;
-		FLOAT fAspect = backBufferDesc.Width / 
-			(float)backBufferDesc.Height;
-		MatrixPerspectiveFovLH( &matProj, (float)0.785398163397448309616, fAspect, 
-			1.0f, 100.0f );
-		FAIL_RET( d3ddev->SetTransform( D3DTS_PROJECTION, &matProj ) );
-	
-	
-		D3DVECTOR from = { 1.0f, 1.0f, -3.0f };
-		D3DVECTOR at = { 0.0f, 0.0f, 0.0f };
-		D3DVECTOR up = { 0.0f, 1.0f, 0.0f };
-	
-		D3DMATRIX matView;
-		MatrixLookAtLH( &matView, & from, & at, & up);
-		FAIL_RET( d3ddev->SetTransform( D3DTS_VIEW, &matView ) );
-	
-		m_time = GetTickCount();*/
-	
-
-	return hr;
-}
-
-
-HRESULT CMultiScene::DrawScene( IDirect3DDevice9* d3ddev,
-	IDirect3DTexture9* texture ) 
-{
-	HRESULT hr;
-
-	if( !( d3ddev && texture ) )
-	{
-		return E_POINTER;
-	}
 
 	if( m_vertexBuffer == NULL )
 	{
 		return D3DERR_INVALIDCALL;
 	}
 
-/*
+	/*
+	CUSTOMVERTEX vertices[] =
+		{
+			{ 150.0f,  50.0f, 0.5f, 1.0f, 0xffff0000, }, // x, y, z, rhw, color
+			{ 250.0f, 250.0f, 0.5f, 1.0f, 0xff00ff00, },
+			{  50.0f, 250.0f, 0.5f, 1.0f, 0xff00ffff, },
+		};*/
+	
 
-// get the difference in time
-	DWORD dwCurrentTime;
-	dwCurrentTime = GetTickCount();
-	double difference = m_time - dwCurrentTime ;
-
-	// figure out the rotation of the plane
-	float x = (float) ( -cos(difference / 2000.0 ) ) ;
-	float y = (float) ( cos(difference / 2000.0 ) ) ;
-	float z = (float) ( sin(difference / 2000.0 ) ) ;
-
-	// update the two rotating vertices with the new position
-	m_vertices[0].position = CUSTOMVERTEX::Position(1,  -1, 0);   // top left
-	m_vertices[3].position = CUSTOMVERTEX::Position(-1, -1, 0); // bottom right
-
-	// Adjust the color so the blue is always on the bottom.
-	// As the corner approaches the bottom, get rid of all the other
-	// colors besides blue
-	DWORD mask0 = (DWORD) (255 * ( ( y + 1.0  )/ 2.0 ));
-	DWORD mask3 = (DWORD) (255 * ( ( -y + 1.0  )/ 2.0 ));
-	m_vertices[0].color = 0xff0000ff | ( mask0 << 16 ) | ( mask0 << 8 );
-	m_vertices[3].color = 0xff0000ff | ( mask3 << 16 ) | ( mask3 << 8 );*/
-
-
-	// write the new vertex information into the buffer
 	void* pData;
-	FAIL_RET( m_vertexBuffer->Lock(0,sizeof(pData), &pData,0) );
+	FAIL_RET( m_vertexBuffer->Lock(0,sizeof(m_vertices), &pData,0) );
 	memcpy(pData,m_vertices,sizeof(m_vertices));                            
 	FAIL_RET( m_vertexBuffer->Unlock() );  
 
+	m_pD3Device->Clear( 0L, NULL, D3DCLEAR_TARGET, 
+		D3DCOLOR_XRGB(0,0,255), 1.0f, 0L );
 
-	// clear the scene so we don't have any articats left
-	d3ddev->Clear( 0L, NULL, D3DCLEAR_TARGET, 
-		D3DCOLOR_XRGB(255,255,255), 1.0f, 0L );
+	FAIL_RET( m_pD3Device->BeginScene() );
 
-	FAIL_RET( d3ddev->BeginScene() );
-	FAIL_RET( d3ddev->SetTexture( 0, texture));
 
-	FAIL_RET(hr = d3ddev->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE));
-	FAIL_RET(hr = d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE));
-	FAIL_RET(hr = d3ddev->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE));
-	FAIL_RET(hr = d3ddev->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE));
+	FAIL_RET( m_pD3Device->SetTexture( 0, m_pTexture));
+	FAIL_RET(hr = m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE));
+	FAIL_RET(hr = m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE));
+	FAIL_RET(hr = m_pD3Device->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE));
+	FAIL_RET(hr = m_pD3Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE));
+		
+	FAIL_RET( m_pD3Device->SetStreamSource(0, m_vertexBuffer, 0, sizeof(CMultiScene::CUSTOMVERTEX)));            //set next source ( NEW )
+	FAIL_RET( m_pD3Device->SetFVF( D3DFVF_CUSTOMVERTEX ) );
+	FAIL_RET( m_pD3Device->DrawPrimitive(D3DPT_TRIANGLESTRIP,0,2) );  //draw quad 
+	FAIL_RET( m_pD3Device->SetTexture( 0, NULL));
+	
 
-	FAIL_RET( d3ddev->SetStreamSource(0, m_vertexBuffer, 0, sizeof(CMultiScene::CUSTOMVERTEX)  ) );            //set next source ( NEW )
-	FAIL_RET( d3ddev->SetFVF( D3DFVF_CUSTOMVERTEX ) );
-	FAIL_RET( d3ddev->DrawPrimitive(D3DPT_TRIANGLESTRIP,0,2) );  //draw quad 
-	FAIL_RET( d3ddev->SetTexture( 0, NULL));
-	FAIL_RET( d3ddev->EndScene());
-
+	/*
+	m_pD3Device->SetStreamSource( 0, m_vertexBuffer, 0, sizeof(CUSTOMVERTEX) );
+		m_pD3Device->SetFVF( D3DFVF_CUSTOMVERTEX );
+		m_pD3Device->DrawPrimitive( D3DPT_TRIANGLELIST, 0, 1 );*/
+	
+	
+	
+	FAIL_RET( m_pD3Device->EndScene());
+ 
+	m_pD3Device->Present(NULL,NULL,NULL,NULL);
 	return hr;
 }
 
-void CMultiScene::SetSrcRect( float fTU, float fTV )
+HRESULT CMultiScene::CreateDevice(HWND hwnd)
 {
-	m_vertices[0].tu = 0.0f; m_vertices[0].tv = 0.0f; // low left
-	m_vertices[1].tu = 0.0f; m_vertices[1].tv = fTV;  // high left
-	m_vertices[2].tu = fTU;  m_vertices[2].tv = 0.0f; // low right
-	m_vertices[3].tu = fTU;  m_vertices[3].tv = fTV;  // high right
+	m_Hwnd = hwnd;
+	HRESULT hr = S_OK;
+	m_p3D.Attach(Direct3DCreate9(D3D_SDK_VERSION));
+
+	D3DDISPLAYMODE dm;
+	hr = m_p3D->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &dm);
+	D3DPRESENT_PARAMETERS pp;
+	ZeroMemory(&pp, sizeof(pp));
+	pp.Windowed = TRUE;
+	pp.hDeviceWindow = hwnd;
+	pp.SwapEffect = D3DSWAPEFFECT_COPY;
+	pp.BackBufferFormat = dm.Format;
+
+	m_pD3Device = NULL;
+
+	FAIL_RET( m_p3D->CreateDevice(  D3DADAPTER_DEFAULT,
+		D3DDEVTYPE_HAL,
+		m_Hwnd,
+		D3DCREATE_SOFTWARE_VERTEXPROCESSING | 
+		D3DCREATE_MULTITHREADED,
+		&pp,
+		&m_pD3Device));
+
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_LIGHTING, FALSE));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_ALPHAREF, 0x10));
+	FAIL_RET(hr = m_pD3Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER));
+
+	FAIL_RET(hr = m_pD3Device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP));
+	FAIL_RET(hr = m_pD3Device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP));
+	FAIL_RET(hr = m_pD3Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR));
+	FAIL_RET(hr = m_pD3Device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR));
+	FAIL_RET(hr = m_pD3Device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR));
+	
+
+
+	m_vertexBuffer = NULL;
+
+	m_pD3Device->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX),0,D3DFVF_CUSTOMVERTEX,D3DPOOL_DEFAULT,& m_vertexBuffer, NULL );
+	
+	//DrawScene();
+	return S_OK;
 }
 
-
-
-template <class T>
-inline T SQUARED(T x)
+void CMultiScene::Get3DDevice( IDirect3DDevice9 **ppDevice )
 {
-	return x * x;
-}
-
-D3DVECTOR* VecSubtract(D3DVECTOR *pOut, const D3DVECTOR *pV1, const D3DVECTOR *pV2)
-{
-	pOut->x = pV1->x - pV2->x;
-	pOut->y = pV1->y - pV2->y;
-	pOut->z = pV1->z - pV2->z;
-	return pOut;
-}
-
-D3DVECTOR* VecNormalize(D3DVECTOR *pOut, const D3DVECTOR *pV1)
-{
-	FLOAT norm_sq = SQUARED(pV1->x) + SQUARED(pV1->y) + SQUARED(pV1->z);
-
-	if (norm_sq > FLT_MIN)
+	ASSERT(ppDevice);
+	if(m_pD3Device)
 	{
-		FLOAT f = sqrtf(norm_sq);
-		pOut->x = pV1->x / f;
-		pOut->y = pV1->y / f;
-		pOut->z = pV1->z / f;
+		*ppDevice = m_pD3Device;
+		(*ppDevice)->AddRef();
 	}
 	else
 	{
-		pOut->x = 0.0f;
-		pOut->y = 0.0f;
-		pOut->z = 0.0f;
+		*ppDevice = NULL;
 	}
-	return pOut;
+	return;
 }
 
-D3DVECTOR* VecCross(D3DVECTOR *pOut, const D3DVECTOR *pV1, const D3DVECTOR *pV2)
+void CMultiScene::SetTexture( IDirect3DTexture9 *pTexture )
 {
-	pOut->x = pV1->y * pV2->z - pV1->z * pV2->y;
-	pOut->y = pV1->z * pV2->x - pV1->x * pV2->z;
-	pOut->z = pV1->x * pV2->y - pV1->y * pV2->x;
-
-	return pOut;
+	ASSERT(pTexture);
+	m_pTexture = pTexture;
 }
 
-
-
-FLOAT VecDot(const D3DVECTOR *pV1, const D3DVECTOR *pV2)
+void CMultiScene::GetWindow( HWND& hwnd )
 {
-	return pV1->x * pV2->x + pV1->y * pV2->y + pV1->z * pV2->z;
-}
-
-
-// MatrixLookAtLH: Approximately equivalent to D3DXMatrixLookAtLH.
-
-D3DMATRIX* MatrixLookAtLH( 
-	D3DMATRIX *pOut, 
-	const D3DVECTOR *pEye, 
-	const D3DVECTOR *pAt,
-	const D3DVECTOR *pUp 
-	)
-{
-
-	D3DVECTOR vecX, vecY, vecZ;
-
-	// Compute direction of gaze. (+Z)
-
-	VecSubtract(&vecZ, pAt, pEye);
-	VecNormalize(&vecZ, &vecZ);
-
-	// Compute orthogonal axes from cross product of gaze and pUp vector.
-	VecCross(&vecX, pUp, &vecZ);
-	VecNormalize(&vecX, &vecX);
-	VecCross(&vecY, &vecZ, &vecX);
-
-	// Set rotation and translate by pEye
-	pOut->_11 = vecX.x;
-	pOut->_21 = vecX.y;
-	pOut->_31 = vecX.z;
-	pOut->_41 = -VecDot(&vecX, pEye);
-
-	pOut->_12 = vecY.x;
-	pOut->_22 = vecY.y;
-	pOut->_32 = vecY.z;
-	pOut->_42 = -VecDot(&vecY, pEye);
-
-	pOut->_13 = vecZ.x;
-	pOut->_23 = vecZ.y;
-	pOut->_33 = vecZ.z;
-	pOut->_43 = -VecDot(&vecZ, pEye);
-
-	pOut->_14 = 0.0f;
-	pOut->_24 = 0.0f;
-	pOut->_34 = 0.0f;
-	pOut->_44 = 1.0f;
-
-	return pOut;
-}
-
-
-// MatrixPerspectiveFovLH: Approximately equivalent to D3DXMatrixPerspectiveFovLH.
-
-D3DMATRIX* MatrixPerspectiveFovLH(
-	D3DMATRIX * pOut,
-	FLOAT fovy,
-	FLOAT Aspect,
-	FLOAT zn,
-	FLOAT zf
-	)
-{   
-	// yScale = cot(fovy/2)
-
-	FLOAT yScale = cosf(fovy * 0.5f) / sinf(fovy * 0.5f);
-	FLOAT xScale = yScale / Aspect;
-
-	ZeroMemory(pOut, sizeof(D3DMATRIX));
-
-	pOut->_11 = xScale;
-
-	pOut->_22 = yScale;
-
-	pOut->_33 = zf / (zf - zn);
-	pOut->_34 = 1.0f;
-
-	pOut->_43 = -pOut->_33 * zn;
-
-	return pOut;
+	hwnd = m_Hwnd;
 }

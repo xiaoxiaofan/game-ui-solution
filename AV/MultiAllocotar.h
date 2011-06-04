@@ -3,6 +3,7 @@
 #include <vmr9.h>
 #include <vector>
 #include "MultiScene.h"
+#include "PlaneScene.h"
 using namespace std;
 
 class CMultiAllocotar : public IVMRSurfaceAllocator9,
@@ -11,8 +12,10 @@ class CMultiAllocotar : public IVMRSurfaceAllocator9,
 
 public:
 
-	CMultiAllocotar(HWND wnd, IDirect3D9* d3d, IDirect3DDevice9* d3dd);
+	CMultiAllocotar(CMultiScene * scene);
 	virtual ~CMultiAllocotar(void);
+
+	HRESULT Attach(IBaseFilter* pVMRFilter,D3DFORMAT format,DWORD_PTR* pdwID);
 
 
 	// IVMRSurfaceAllocator9
@@ -55,8 +58,7 @@ public:
 
 protected:
 	HRESULT CreateDevice();
-
-	// a helper function to erase every surface in the vector
+	
 	void DeleteSurfaces();
 
 	bool NeedToHandleDisplayChange();
@@ -68,17 +70,15 @@ protected:
 	HRESULT PresentHelper(VMR9PresentationInfo *lpPresInfo);
 
 private:
-	// needed to make this a thread safe object
-	CCritSec    m_ObjectLock;
-	HWND        m_window;
-	long        m_refCount;
 
-	SmartPtr<IDirect3D9>                     m_D3D;
-	SmartPtr<IDirect3DDevice9>               m_D3DDev;
-	SmartPtr<IVMRSurfaceAllocatorNotify9>    m_lpIVMRSurfAllocNotify;
-	vector<SmartPtr<IDirect3DSurface9> >     m_surfaces;
-	SmartPtr<IDirect3DSurface9>              m_renderTarget;
-	SmartPtr<IDirect3DTexture9>              m_privateTexture;
-	CMultiScene                              m_scene;
+	CCritSec    m_ObjectLock;
+	long        m_refCount;
+	SmartPtr<IVMRSurfaceAllocatorNotify9>           m_lpIVMRSurfAllocNotify;
+	vector<SmartPtr<IDirect3DSurface9>>             m_surfaces;
+	SmartPtr<IDirect3DSurface9>                     m_renderTarget;
+	CMultiScene*                                    m_pScene;
+	CPlaneScene                                     m_sence;
+	SmartPtr<IDirect3DDevice9>                      device;
+	SmartPtr<IDirect3D9>                            d3d; 
 };
 

@@ -93,6 +93,7 @@
     <ClInclude Include="Export.h" />
     <ClInclude Include="MultiAllocotar.h" />
     <ClInclude Include="MultiScene.h" />
+    <ClInclude Include="PlaneScene.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -112,6 +113,7 @@
     <ClCompile Include="exec.cpp" />
     <ClCompile Include="MultiAllocotar.cpp" />
     <ClCompile Include="MultiScene.cpp" />
+    <ClCompile Include="PlaneScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
