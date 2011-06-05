@@ -4,6 +4,7 @@
 #include <vector>
 #include "MultiScene.h"
 #include "PlaneScene.h"
+#include <list>
 using namespace std;
 
 class CMultiAllocotar : public IVMRSurfaceAllocator9,
@@ -55,30 +56,36 @@ public:
 	virtual ULONG STDMETHODCALLTYPE AddRef();
 	virtual ULONG STDMETHODCALLTYPE Release();
 
-
-protected:
-	HRESULT CreateDevice();
+private: 
+	class VideoSource{
 	
-	void DeleteSurfaces();
+	public:
 
-	bool NeedToHandleDisplayChange();
+		VideoSource();
+		~VideoSource();
 
-	// This function is here so we can catch the loss of surfaces.
-	// All the functions are using the FAIL_RET macro so that they exit
-	// with the last error code.  When this returns with the surface lost
-	// error code we can restore the surfaces.
-	HRESULT PresentHelper(VMR9PresentationInfo *lpPresInfo);
+		void DeleteSurfaces();
+		HRESULT AllocateSurfaceBuffer( DWORD dwN );
+
+	public:
+		DWORD_PTR                                       m_dwID;
+		SmartPtr<IVMRSurfaceAllocatorNotify9>           m_lpIVMRSurfAllocNotify;
+		std::vector<SmartPtr<IDirect3DSurface9>>        m_surfaces;
+
+	private:
+		CCritSec                                        m_ObjectLock;
+		
+	};
+
+private:
+	HRESULT  GetVideoSourceInfo(DWORD_PTR dwID,VideoSource **ppSource);
 
 private:
 
 	CCritSec    m_ObjectLock;
 	long        m_refCount;
-	SmartPtr<IVMRSurfaceAllocatorNotify9>           m_lpIVMRSurfAllocNotify;
-	vector<SmartPtr<IDirect3DSurface9>>             m_surfaces;
-	SmartPtr<IDirect3DSurface9>                     m_renderTarget;
+	std::list<VideoSource*>                         m_pVideoSources; 
+
 	CMultiScene*                                    m_pScene;
-	CPlaneScene                                     m_sence;
-	SmartPtr<IDirect3DDevice9>                      device;
-	SmartPtr<IDirect3D9>                            d3d; 
 };
 
