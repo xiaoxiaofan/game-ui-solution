@@ -55,6 +55,8 @@ HRESULT CMultiScene::DrawScene()
 			{  50.0f, 250.0f, 0.5f, 1.0f, 0xff00ffff, },
 		};*/
 	
+	m_pD3Device->SetRenderTarget(0,m_pRenderTarget);
+
 
 	void* pData;
 	FAIL_RET( m_vertexBuffer->Lock(0,sizeof(m_vertices), &pData,0) );
@@ -138,7 +140,8 @@ HRESULT CMultiScene::CreateDevice(HWND hwnd)
 
 	m_pD3Device->CreateVertexBuffer(3*sizeof(CUSTOMVERTEX),0,D3DFVF_CUSTOMVERTEX,D3DPOOL_DEFAULT,& m_vertexBuffer, NULL );
 	
-	//DrawScene();
+	m_pD3Device->GetRenderTarget(0,&m_pRenderTarget);
+
 	return S_OK;
 }
 

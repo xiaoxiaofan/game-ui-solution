@@ -63,6 +63,7 @@ private:
 	SmartPtr<IDirect3DTexture9>               m_pTexture;
 	SmartPtr<IDirect3DDevice9>                m_pD3Device;
 	SmartPtr<IDirect3D9>                      m_p3D;
+	SmartPtr<IDirect3DSurface9>               m_pRenderTarget;
 	HWND                                      m_Hwnd;
 };
 
