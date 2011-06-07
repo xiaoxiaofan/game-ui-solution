@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "VideoMulti.h"
+#include <dshowutil.h>
 
 
 CVideoMulti::CVideoMulti(HWND hwnd)
@@ -7,7 +8,7 @@ CVideoMulti::CVideoMulti(HWND hwnd)
 	m_hwnd = hwnd;
 	m_pSence = new CMultiScene();
 	m_pSence->CreateDevice(hwnd);
-	m_pMultiAllocotar = new CMultiAllocotar(m_pSence);
+	StartRenderThread();
 }
 
 
@@ -17,7 +18,7 @@ CVideoMulti::~CVideoMulti(void)
 
 
 
-HRESULT CVideoMulti::AddMultiFileSource()
+HRESULT CVideoMulti::AddMultiFileSource(DWORD_PTR& userId,LPRECT pRect)
 {
 	SmartPtr<IVMRFilterConfig9> filterConfig;
 
@@ -55,8 +56,8 @@ HRESULT CVideoMulti::AddMultiFileSource()
 
 	if (SUCCEEDED(hr))
 	{
-		DWORD_PTR userId;
-		hr = m_pMultiAllocotar->Attach(m_pVRM,D3DFMT_A8R8G8B8,&userId);
+		hr = m_pSence->AddVideoSource(m_pVRM,userId);
+		m_pVSIDs.push_back(userId);
 	}
 
 	if (SUCCEEDED(hr))
@@ -80,7 +81,7 @@ HRESULT CVideoMulti::AddMultiFileSource()
 	}
 
 	SysFreeString(path);
-
+	//SaveGraphFile(m_pGraph,L"C:\\VideoMulti.grf");
 	return hr;
 }
 
@@ -122,5 +123,33 @@ BSTR CVideoMulti::GetMoviePath()
 	}
 
 	return NULL;
+}
+
+void CVideoMulti::StartRenderThread()
+{
+	HANDLE hThread = NULL;
+	DWORD tid = NULL;
+	hThread = CreateThread( NULL,
+		NULL,
+		RenderThreadProc_, 
+		this, 
+		NULL, 
+		&tid);
+
+}
+
+DWORD WINAPI CVideoMulti::RenderThreadProc_( LPVOID lpParameter )
+{
+	CVideoMulti* This = (CVideoMulti*)lpParameter;
+	while(true)
+	{
+		This->m_pSence->DrawScene();
+		Sleep(1);
+	}
+}
+
+void CVideoMulti::SetPosition( DWORD_PTR dwID,int x,int y,int cx,int cy )
+{
+	m_pSence->SetPosition(dwID,x,y,cx,cy);
 }
 

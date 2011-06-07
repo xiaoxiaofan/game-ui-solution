@@ -15,6 +15,12 @@
 #include <d3d9.h>
 #include <vmr9.h>
 
+#include <vector>
+#include <list>
+using namespace std;
+
+#include "SmartPtr.h"
+
 #include <assert.h>
 #include "exec.h"
 #include "AVDefine.h"
