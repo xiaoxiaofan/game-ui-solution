@@ -1,11 +1,9 @@
 #pragma once
 #include <d3d9.h>
 #include <vmr9.h>
-#include <vector>
 #include "MultiScene.h"
-#include "PlaneScene.h"
-#include <list>
-using namespace std;
+
+class CMultiScene;
 
 class CMultiAllocotar : public IVMRSurfaceAllocator9,
 	                           IVMRImagePresenter9	                           
@@ -13,10 +11,16 @@ class CMultiAllocotar : public IVMRSurfaceAllocator9,
 
 public:
 
-	CMultiAllocotar(CMultiScene * scene);
+	CMultiAllocotar(CMultiScene& scene);
 	virtual ~CMultiAllocotar(void);
 
-	HRESULT Attach(IBaseFilter* pVMRFilter,D3DFORMAT format,DWORD_PTR* pdwID);
+	HRESULT Attach(IBaseFilter* pVMRFilter,D3DFORMAT format,DWORD_PTR& pdwID);
+
+	HRESULT SetRect(DWORD_PTR dwID ,NORMALIZEDRECT & newnrect);
+
+	//void GetVideoSources(std::list<VideoSource *>&  videoList);
+
+	void GetTexture(DWORD_PTR videoId,IDirect3DTexture9 **ppTexture);
 
 
 	// IVMRSurfaceAllocator9
@@ -56,36 +60,15 @@ public:
 	virtual ULONG STDMETHODCALLTYPE AddRef();
 	virtual ULONG STDMETHODCALLTYPE Release();
 
-private: 
-	class VideoSource{
-	
-	public:
-
-		VideoSource();
-		~VideoSource();
-
-		void DeleteSurfaces();
-		HRESULT AllocateSurfaceBuffer( DWORD dwN );
-
-	public:
-		DWORD_PTR                                       m_dwID;
-		SmartPtr<IVMRSurfaceAllocatorNotify9>           m_lpIVMRSurfAllocNotify;
-		std::vector<SmartPtr<IDirect3DSurface9>>        m_surfaces;
-
-	private:
-		CCritSec                                        m_ObjectLock;
-		
-	};
-
-private:
 	HRESULT  GetVideoSourceInfo(DWORD_PTR dwID,VideoSource **ppSource);
-
+	
 private:
 
-	CCritSec    m_ObjectLock;
-	long        m_refCount;
-	std::list<VideoSource*>                         m_pVideoSources; 
+	CCritSec                                        m_ObjectLock;
+	long                                            m_refCount;
+	CMultiScene&                                    m_scene;
 
-	CMultiScene*                                    m_pScene;
+public:
+	std::list<VideoSource*>                         m_pVideoSources;
 };
 
